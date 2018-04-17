@@ -1,0 +1,37 @@
+export function selectionSort(iteration,initialData,data){
+    let array = initialData.map(a => Object.assign({}, a));
+    let wrongArray =[];
+    for(let i = 0; i < iteration; i++) {
+        let lowestIndex = i;
+        for (let j = i+1; j < array.length; j++) {
+            if (array[j].value < array[lowestIndex].value) {
+                lowestIndex = j;
+            }
+        }
+        if(lowestIndex !== i){
+            let tmp = array[i];
+            array[i] = array[lowestIndex];
+            array[lowestIndex] = tmp;
+        }
+    }
+
+    for(let k = array.length; k--;) {
+        if(array[k].value !== data[k].value){
+            console.log(array[k].value);
+            wrongArray.push(data[k]);
+        }
+    }
+    console.log(array);
+    console.log(data);
+    if(wrongArray.length >0){
+        return {
+            result: false,
+            wrongArray: wrongArray
+        };
+    }else{
+        return {
+            result: true,
+            wrongArray: []
+        };
+    }
+}

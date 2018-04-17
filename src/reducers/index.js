@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import algorithmSeries from './seriesReducer'
+import seriesReducer from './seriesReducer'
 
 export default combineReducers({
-    algorithmSeries
+    seriesReducer
 })

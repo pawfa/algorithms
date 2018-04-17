@@ -1,0 +1,10 @@
+.blockContainer{
+    display: flex;
+    flex-direction: row;
+    /*width: 70%;*/
+    margin: 0 auto;
+    justify-content: center;
+}
+.presentationContainer{
+    margin: 0 auto;
+}
