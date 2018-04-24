@@ -1,10 +1,11 @@
 import {selectionSort} from '../algorithms/SelectionSort.js'
+import {insertionSort} from "../algorithms/InsertionSort";
 
 const initialState = {
     initialSeries:[],
     workingSeries: [],
     iteration: 1,
-    algorithmType: '',
+    algorithmType: 'SELECTIONSORT',
     correct: '',
     wrongArray: [],
     end: false
@@ -26,7 +27,17 @@ const seriesReducer = (state = initialState, action) =>{
             return {
                 ...state,
                 initialSeries: action.payload,
-                workingSeries: action.payload
+                workingSeries: action.payload,
+                iteration: 1,
+                correct: '',
+                wrongArray:[],
+                end: false
+            };
+        case 'ALGORITHM_TYPE':
+            console.log('reducer checking type');
+            return {
+                ...state,
+                algorithmType: action.payload
             };
         case 'CHANGE_BLOCKS_ORDER':
             const [dragIndex,hoverIndex,dragNumber] = action.payload;
@@ -35,19 +46,39 @@ const seriesReducer = (state = initialState, action) =>{
             seriesTmp[dragIndex] = seriesTmp[hoverIndex];
             seriesTmp[hoverIndex] = tmp;
             return { ...state, workingSeries: seriesTmp };
-        case 'CHECK_SELECTIONSORT':
-            console.log(state.iteration);
-            let {result,wrongArray} = selectionSort(state.iteration,state.initialSeries,state.workingSeries);
+        case 'CHECK_ALGORITHM':
 
-            return {
-                ...state,
-                iteration: (result ? state.iteration+1 : state.iteration),
-                correct: result,
-                wrongArray: wrongArray,
-                end: state.iteration === state.initialSeries.length-1
-            };
+            switch(state.algorithmType){
+                case 'SELECTIONSORT': {
+                    console.log(state.iteration);
+                    let {result, wrongArray} = selectionSort(state.iteration, state.initialSeries, state.workingSeries);
+
+                    return {
+                        ...state,
+                        iteration: (result ? state.iteration + 1 : state.iteration),
+                        correct: result,
+                        wrongArray: wrongArray,
+                        end: state.iteration === state.initialSeries.length - 1
+                    };
+                }
+                case 'INSERTIONSORT': {
+                    console.log('insertionsort');
+                    let {result, wrongArray} = insertionSort(state.iteration, state.initialSeries, state.workingSeries);
+
+                    return {
+                        ...state,
+                        iteration: (result ? state.iteration + 1 : state.iteration),
+                        correct: result,
+                        wrongArray: wrongArray,
+                        end: state.iteration === state.initialSeries.length - 1
+                    };
+                }
+                default:
+                    return state;
+            }
+
         default:
-            return state
+            return state;
     }
 
 };

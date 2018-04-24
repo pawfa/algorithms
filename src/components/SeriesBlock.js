@@ -16,6 +16,7 @@ class SeriesBlock extends Component {
         index: PropTypes.number.isRequired,
         number: PropTypes.any.isRequired,
         moveBlock: PropTypes.func.isRequired,
+        resultClass: PropTypes.string.isRequired
     };
 
     render () {
@@ -26,8 +27,9 @@ class SeriesBlock extends Component {
             connectDropTarget,
         } = this.props;
         const opacity = isDragging ? 0 : 1;
+        const {resultClass} = this.props;
         return connectDragSource(
-            connectDropTarget(<div className={'block'} style={{opacity }}>{number}</div>),
+            connectDropTarget(<div className={'block '+resultClass} style={{opacity }}>{number}</div>),
         );
     }
 }
@@ -87,13 +89,6 @@ const blockTarget = {
     },
 };
 
-function collect(connect, monitor) {
-    return {
-        connectDropTarget: connect.dropTarget(),
-        connectDragSource: connect.dragSource(),
-        isDragging: monitor.isDragging()
-    };
-}
 
 export default flow(DropTarget(ItemTypes.BLOCK, blockTarget,  connect => ({
     connectDropTarget: connect.dropTarget(),

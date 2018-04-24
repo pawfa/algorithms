@@ -8,14 +8,6 @@ import {DragDropContext} from 'react-dnd'
 
 class SeriesInputContainer extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-            value: 'coconut',
-            disabled: false
-        };
-    }
-
     moveBlock = (dragIndex, hoverIndex) => {
         const {workingSeries} = this.props;
         const dragNumber = workingSeries[dragIndex];
@@ -24,29 +16,30 @@ class SeriesInputContainer extends Component {
 
     createBlock(i, numberObject) {
         const {value, id} = numberObject;
+        const {wrongArray,iteration} = this.props;
+        const blockClass = wrongArray.includes(i) ? 'wrong' : iteration === 1 ? '' :'correct';
+        console.log(blockClass);
         return (
-            <SeriesBlock key={id} index={i} id={id} number={value} moveBlock={this.moveBlock}/>
+            <SeriesBlock key={id} index={i} id={id} number={value} resultClass={blockClass} moveBlock={this.moveBlock}/>
         )
     }
 
     render() {
-        const {workingSeries, iteration, correct, wrongArray, end} = this.props;
+        const {workingSeries, iteration, end} = this.props;
         const blocks = [];
+        const showMessage = end ? "Series is sorted" :"Iteration number: "+iteration;
         for (let i = 0; i < workingSeries.length; i++) {
             blocks.push(this.createBlock(i, workingSeries[i]));
         }
-
-        console.log('end '+end);
-        console.log('correct '+correct);
         return <div className={'presentationContainer'}>
             <div className="row">
-            <div className={'iterationNumber'}><h5>Iteration number: {iteration}</h5></div>
+            <div className={'iterationNumber'}><h5>{showMessage}</h5></div>
             </div>
             <div className="row">
             <div className={'blockContainer'}>{blocks}</div>
             </div>
             <div className="row">
-            <button type='text' onClick={()=>this.props.checkCorrectness()}>Check</button>
+            <button type='text' disabled={end} onClick={()=>this.props.checkCorrectness()}>Check</button>
             </div>
         </div>
     }
@@ -68,7 +61,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(changeBlocksOrder(dragIndex, hoverIndex, dragNumber))
         },
         checkCorrectness: () => {
-            dispatch(checkCorrectness('SELECTIONSORT'))
+            dispatch(checkCorrectness())
         }
 
     }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import SeriesInputContainer from './containers/SeriesInputContainer'
 import SeriesPresentationContainer from './containers/SeriesPresentationContainer'
@@ -10,7 +9,6 @@ class App extends Component {
       <div className="App">
           <SeriesInputContainer/>
           <SeriesPresentationContainer/>
-
       </div>
     );
   }

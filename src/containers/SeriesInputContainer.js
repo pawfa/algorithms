@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from "react-redux";
-import {changeAllSeries} from "../actions";
+import {changeAllSeries, setAlgorithmType} from "../actions";
 import './SeriesInputContainer.css'
+import ReactMaterialSelect from 'react-material-select'
+import 'react-material-select/lib/css/reactMaterialSelect.css'
 
 class SeriesInputContainer extends Component {
     constructor() {
         super();
         this.state = {
-            value: 'coconut',
             disabled: false
         };
     }
@@ -22,6 +23,11 @@ class SeriesInputContainer extends Component {
             })
         }
         this.props.changeAllSeries(seriesObjectsArray);
+    };
+
+    chooseSortingAlgorithm = (event) =>{
+        console.log(event.value);
+        this.props.setAlgorithmType(event.value);
     };
 
     render() {
@@ -47,10 +53,11 @@ class SeriesInputContainer extends Component {
                                    }}/>
                         </div>
                     </div>
-                    {/*<button type='text' onClick={() => {*/}
-                        {/*this.setState({disabled: true})*/}
-                    {/*}}>Start*/}
-                    {/*</button>*/}
+                    <ReactMaterialSelect label='Choose algorithm' defaultValue='SelectionSort' onChange={this.chooseSortingAlgorithm}>
+                        <option dataValue="SelectionSort">SelectionSort</option>
+                        <option dataValue="InsertionSort">InsertionSort</option>
+                        <option dataValue="MergeSort">MergeSort</option>
+                    </ReactMaterialSelect>
                 </form>
         </div>
     }
@@ -66,6 +73,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         changeAllSeries: (series) => {
             dispatch(changeAllSeries(series))
+        },
+        setAlgorithmType: (algorithm) =>{
+            dispatch(setAlgorithmType(algorithm))
         }
     }
 };

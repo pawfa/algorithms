@@ -8,6 +8,11 @@ export const changeBlocksOrder = (dragIndex, hoverIndex,dragNumber) => ({
     payload: [dragIndex, hoverIndex,dragNumber]
 });
 
-export const checkCorrectness = (algorithmType) => ({
-    type: 'CHECK_'+algorithmType.toUpperCase()
+export const checkCorrectness = () => ({
+    type: 'CHECK_ALGORITHM'
+});
+
+export const setAlgorithmType = (algorithmType) => ({
+    type: 'ALGORITHM_TYPE',
+    payload: algorithmType.toUpperCase()
 });
