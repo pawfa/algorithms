@@ -16,7 +16,14 @@ class SeriesBlock extends Component {
         index: PropTypes.number.isRequired,
         number: PropTypes.any.isRequired,
         moveBlock: PropTypes.func.isRequired,
-        resultClass: PropTypes.string.isRequired
+        resultClass: PropTypes.string.isRequired,
+    };
+
+    sendName = () =>{
+        if(this.props.click){
+            this.props.click(this.props.id);
+        }
+
     };
 
     render () {
@@ -29,7 +36,7 @@ class SeriesBlock extends Component {
         const opacity = isDragging ? 0 : 1;
         const {resultClass} = this.props;
         return connectDragSource(
-            connectDropTarget(<div className={'block '+resultClass} style={{opacity }}>{number}</div>),
+            connectDropTarget(<div className={'block '+resultClass} style={{opacity }} onClick={this.sendName}>{number}</div>),
         );
     }
 }

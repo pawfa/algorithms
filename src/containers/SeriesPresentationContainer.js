@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from "react-redux";
 import SeriesBlock from '../components/SeriesBlock'
-import {checkCorrectness, changeBlocksOrder} from "../actions";
+import {checkCorrectness, changeBlocksOrder, setPivot} from "../actions";
 import './SeriesPresentationContainer.css'
 import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
@@ -14,23 +14,34 @@ class SeriesInputContainer extends Component {
         this.props.changeBlocksOrder(dragIndex, hoverIndex, dragNumber);
     };
 
+    choosePivot = (event) =>{
+      this.props.setPivot(event);
+    };
+
     createBlock(i, numberObject) {
         const {value, id} = numberObject;
-        const {wrongArray,iteration} = this.props;
-        const blockClass = wrongArray.includes(i) ? 'wrong' : iteration === 1 ? '' :'correct';
-        console.log(blockClass);
+        const {wrongArray, disabledArray} = this.props;
+        let blockClass = '';
+        if(wrongArray.includes(i)){
+            blockClass = 'wrong'
+        }else if(disabledArray.includes(i)){
+            blockClass = 'disabled'
+        }
+        let clickable = this.props.algorithmType === 'PARTITION' ? this.choosePivot : undefined;
+        console.log(this.props.algorithmType);
         return (
-            <SeriesBlock key={id} index={i} id={id} number={value} resultClass={blockClass} moveBlock={this.moveBlock}/>
+            <SeriesBlock click={clickable} key={id} index={i} id={id} number={value} resultClass={blockClass} moveBlock={this.moveBlock}/>
         )
     }
 
     render() {
         const {workingSeries, iteration, end} = this.props;
         const blocks = [];
-        const showMessage = end ? "Series is sorted" :"Iteration number: "+iteration;
+        const showMessage = end ? this.props.algorithmType === 'PARTITION' ? 'Series partitioned' :"Series is sorted" :"Iteration number: "+iteration;
         for (let i = 0; i < workingSeries.length; i++) {
             blocks.push(this.createBlock(i, workingSeries[i]));
         }
+
         return <div className={'presentationContainer'}>
             <div className="row">
             <div className={'iterationNumber'}><h5>{showMessage}</h5></div>
@@ -48,9 +59,11 @@ class SeriesInputContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         workingSeries: state.seriesReducer.workingSeries,
+        algorithmType: state.seriesReducer.algorithmType,
         iteration: state.seriesReducer.iteration,
         correct: state.seriesReducer.correct,
         wrongArray: state.seriesReducer.wrongArray,
+        disabledArray: state.seriesReducer.disabledArray,
         end: state.seriesReducer.end
     }
 };
@@ -62,8 +75,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         checkCorrectness: () => {
             dispatch(checkCorrectness())
+        },
+        setPivot: (pivotId) =>{
+            dispatch(setPivot(pivotId))
         }
-
     }
 };
 SeriesInputContainer = DragDropContext(HTML5Backend)(SeriesInputContainer);

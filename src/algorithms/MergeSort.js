@@ -1,54 +1,104 @@
-export function mergeSort(iteration,initialData,data){
-    let array = initialData.map(a => Object.assign({}, a));
-    let wrongArray =[];
+let counter = 0;
+let iterationArray = [];
+let iter;
+let dataGlobal;
+let arrayGlobal;
+let wrongArray = [];
+let disabledArray = [];
+
+export function mergeSort(iteration, initialData, data) {
+    console.log(initialData);
+    wrongArray = [];
+    disabledArray = [];
+    counter = 0;
+    dataGlobal = data;
+    arrayGlobal = initialData.map(a => Object.assign({}, a));
 
 
+    iter = iteration;
 
-    for(let k = array.length; k--;) {
-        if(array[k].value !== data[k].value){
-            wrongArray.push(k);
-        }
-    }
-    if(wrongArray.length >0){
+    let completeArray = mergeSortImp(initialData);
+    let end = endSorting(completeArray, data);
+
+    // disabledArray = initialData.filter( function( el ) {
+    //     return !iterationArray.includes( el );
+    // } ).map((el)=>{return el.value});
+
+    if (wrongArray.length > 0) {
         return {
             result: false,
-            wrongArray: wrongArray
+            wrongArray: wrongArray,
+            disabledArray: disabledArray,
+            end: end
         };
-    }else{
+    } else {
         return {
             result: true,
-            wrongArray: []
+            wrongArray: [],
+            disabledArray: [],
+            end: end
         };
     }
 }
 
-
-function sort(arr){
-    let n = arr.length;
-    if (n <= 1) return arr;
-    let a = [n/2];
-    let b = [n - n/2];
-    for (let i = 0; i <a.length ; i++) {
-        a[i] = arr[i];
-    }
-    for (let j = 0; j <b.length ; j++) {
-        b[j] = arr[j+n/2];
+function mergeSortImp(arr) {
+    if (arr.length === 1) {
+        return arr
     }
 
-    return merge(sort(a),sort(b));
+    const middle = Math.floor(arr.length / 2);
+    const left = arr.slice(0, middle);
+    const right = arr.slice(middle);
 
+    return merge(
+        mergeSortImp(left),
+        mergeSortImp(right),
+        arr
+    )
 }
 
-function merge(a, b){
+function merge(left, right, arr) {
+    counter++;
+    let result = [];
+    let indexLeft = 0;
+    let indexRight = 0;
 
-    let aux = [a.length+b.length];
-
-    let i = 0, j = 0;
-    for (let k = 0; k < aux.length; k++) {
-        if      (i >= a.length) aux[k] = b[j++];
-        else if (j >= b.length) aux[k] = a[i++];
-        else if (a[i] <= b[j])  aux[k] = a[i++];
-        else                    aux[k] = b[j++];
+    while (indexLeft < left.length && indexRight < right.length) {
+        if (Number(left[indexLeft].value) < Number(right[indexRight].value)) {
+            result.push(left[indexLeft]);
+            indexLeft++
+        } else {
+            result.push(right[indexRight]);
+            indexRight++
+        }
     }
-    return aux;
+
+    if (iter === counter) {
+        iterationArray = result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
+        let minIndex = arrayGlobal.findIndex(x => x.id === arr[0].id);
+        for (let k = 0; k < arr.length; k++) {
+            let index = arrayGlobal.findIndex(x => x.id === arr[k].id);
+            if (index < minIndex) {
+                minIndex = index;
+            }
+        }
+
+        for (let j = 0; j < iterationArray.length; j++) {
+            arrayGlobal[minIndex] = iterationArray[j];
+            if (arrayGlobal[minIndex].value !== dataGlobal[minIndex].value) {
+                wrongArray.push(minIndex);
+            }
+            minIndex++;
+        }
+    }
+    return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
+}
+
+function endSorting(completed, userInput) {
+    for (let i = 0; i < completed.length; i++) {
+        if (completed[i].id !== userInput[i].id) {
+            return false;
+        }
+    }
+    return true;
 }

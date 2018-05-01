@@ -16,3 +16,8 @@ export const setAlgorithmType = (algorithmType) => ({
     type: 'ALGORITHM_TYPE',
     payload: algorithmType.toUpperCase()
 });
+
+export const setPivot = (pivotId) => ({
+    type: 'SET_PIVOT',
+    payload: pivotId
+});

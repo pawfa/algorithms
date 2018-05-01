@@ -53,10 +53,11 @@ class SeriesInputContainer extends Component {
                                    }}/>
                         </div>
                     </div>
-                    <ReactMaterialSelect label='Choose algorithm' defaultValue='SelectionSort' onChange={this.chooseSortingAlgorithm}>
+                    <ReactMaterialSelect label='Choose algorithm' defaultValue='Partition' onChange={this.chooseSortingAlgorithm}>
                         <option dataValue="SelectionSort">SelectionSort</option>
                         <option dataValue="InsertionSort">InsertionSort</option>
                         <option dataValue="MergeSort">MergeSort</option>
+                        <option dataValue="Partition">Partition</option>
                     </ReactMaterialSelect>
                 </form>
         </div>
@@ -76,7 +77,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         setAlgorithmType: (algorithm) =>{
             dispatch(setAlgorithmType(algorithm))
-        }
+        },
     }
 };
 SeriesInputContainer = connect(mapStateToProps, mapDispatchToProps)(SeriesInputContainer);
