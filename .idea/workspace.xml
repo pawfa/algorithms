@@ -4,11 +4,6 @@
     <list default="true" id="e1ce5015-7216-4ae3-bd6f-b56d5f0b42ed" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change beforePath="$PROJECT_DIR$/src/algorithms/MergeSort.js" afterPath="$PROJECT_DIR$/src/algorithms/MergeSort.js" />
-      <change beforePath="$PROJECT_DIR$/src/components/SeriesBlock.css" afterPath="$PROJECT_DIR$/src/components/SeriesBlock.css" />
-      <change beforePath="$PROJECT_DIR$/src/containers/SeriesPresentationContainer.js" afterPath="$PROJECT_DIR$/src/containers/SeriesPresentationContainer.js" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/seriesReducer.js" afterPath="$PROJECT_DIR$/src/reducers/seriesReducer.js" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -118,8 +113,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="460">
-                <caret line="35" column="7" lean-forward="true" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+              <first_editor relative-caret-position="136">
+                <caret line="8" column="18" lean-forward="true" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -370,7 +365,7 @@
       <workItem from="1524552886012" duration="17209000" />
       <workItem from="1525064552943" duration="20060000" />
       <workItem from="1525149574090" duration="32545000" />
-      <workItem from="1525322926740" duration="14837000" />
+      <workItem from="1525322926740" duration="14901000" />
     </task>
     <task id="LOCAL-00001" summary="Created first algorithm exercise.">
       <created>1523985966786</created>
@@ -400,11 +395,18 @@
       <option name="project" value="LOCAL" />
       <updated>1525338280275</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Created readme.">
+      <created>1525340216945</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1525340216945</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="124579000" />
+    <option name="totallyTimeSpent" value="124643000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2514" height="1096" extended-state="6" />
@@ -469,7 +471,8 @@
     <MESSAGE value="Working insertion sort algorithm, working on mergesort." />
     <MESSAGE value="Implemented mergesort and partition algorithms." />
     <MESSAGE value="Working on design." />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on design." />
+    <MESSAGE value="Created readme." />
+    <option name="LAST_COMMIT_MESSAGE" value="Created readme." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -881,8 +884,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="460">
-            <caret line="35" column="7" lean-forward="true" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+          <first_editor relative-caret-position="136">
+            <caret line="8" column="18" lean-forward="true" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
             <folding />
           </first_editor>
           <second_editor />

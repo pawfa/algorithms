@@ -8,14 +8,6 @@ Example application to learn Reract Redux. You can see demo [here](http://algori
 
 ## Getting Started
 
-### Technology Stack
-Component                   | Technology
----                         | ---
-Frontend                    | [React](https://github.com/facebook/react/)
-Backend                     | [NodeJs](https://nodejs.org/en/) and [ExpressJs](https://expressjs.com/)
-Client/Server Build Tools   | npm
-
-
 ### Dependencies
 
 - Node 6.0 or above,
