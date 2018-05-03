@@ -14,7 +14,7 @@ export const checkCorrectness = () => ({
 
 export const setAlgorithmType = (algorithmType) => ({
     type: 'ALGORITHM_TYPE',
-    payload: algorithmType.toUpperCase()
+    payload: algorithmType
 });
 
 export const setPivot = (pivotId) => ({

@@ -86,7 +86,7 @@ function merge(left, right, arr) {
         for (let j = 0; j < iterationArray.length; j++) {
             arrayGlobal[minIndex] = iterationArray[j];
             if (arrayGlobal[minIndex].value !== dataGlobal[minIndex].value) {
-                wrongArray.push(minIndex);
+                wrongArray.push(arrayGlobal[minIndex].id);
             }
             minIndex++;
         }

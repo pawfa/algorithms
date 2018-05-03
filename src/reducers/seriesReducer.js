@@ -11,7 +11,7 @@ const initialState = {
     correct: '',
     wrongArray: [],
     disabledArray: [],
-    pivot: 0,
+    pivot: 1,
     end: false
 };
 for(let i = 6; i > 0; i--){
@@ -29,17 +29,13 @@ const seriesReducer = (state = initialState, action) =>{
     switch (action.type) {
         case 'CHANGE_ALL_SERIES':
             return {
-                ...state,
+                ...initialState,
                 initialSeries: action.payload,
                 workingSeries: action.payload,
-                iteration: 1,
-                correct: '',
-                wrongArray:[],
-                end: false
             };
         case 'ALGORITHM_TYPE':
             return {
-                ...state,
+                ...initialState,
                 algorithmType: action.payload
             };
         case 'SET_PIVOT':

@@ -1,7 +1,74 @@
+
 .inputContainer{
     margin: 100px auto 0 auto;
 }
 .inputForm{
-    margin: 0 auto;
-    width: 60%;
+    margin: 50px auto 0;
+    width: 40%;
+}
+
+input[type=text] {
+    font-family: 'Play', sans-serif;
+    font-size: 25px !important;
+}
+
+.button{
+    position: relative;
+    font-family: 'Changa', sans-serif;
+    font-size: 25px;
+    margin: 10px 10px;
+    border: 1px solid gray;
+    border-radius: 2px;
+    padding: 10px;
+    cursor: pointer;
+    outline: 0;
+    color: #000;
+    overflow:hidden;
+    z-index: 1;
+    background-color: #F1ECE9;
+    transition:         0.08s ease-in;
+    -o-transition:      0.08s ease-in;
+    -ms-transition:     0.08s ease-in;
+    -moz-transition:    0.08s ease-in;
+    -webkit-transition: 0.08s ease-in;
+
+}
+.active {
+    background-color: #485058;
+    color:white;
+}
+.button:focus{
+    background-color: #485058;
+    color:white;
+}
+.button:hover {
+    color: white;
+}
+.button:before {
+    content: "";
+    position: absolute;
+    background: #485058;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: -1;
+    -webkit-transition: top 0.2s ease-in;
+}
+.button:hover:before {
+    top: 0;
+}
+
+.input-field input[type=text]:focus + label {
+    color: red !important;;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #485058 !important;
+    box-shadow: 0 1px 0 0 #485058 !important;
+}
+
+.input-field input[type=text] {
+    border-bottom: 1px solid #CCBCB8 !important;
+    box-shadow: 0 1px 0 0 #CCBCB8 !important;
 }

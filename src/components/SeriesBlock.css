@@ -1,13 +1,32 @@
+:root {
+    /*--main-color: #F06D06;*/
+}
+
 .block{
-    min-width: 40px;
-    height: 30px;
+    width: 50px;
+    height: 40px;
     border: 1px solid black;
     display: inline-block;
-    padding: 0 10px;
+    /*padding: 0 10px;*/
+    margin: 0 5px;
+    font-family: 'Play', sans-serif;
+    font-size: 25px;
+    background-color: #F1ECE9;
 }
 .wrong{
-    background-color: red;
+    background-color: #FF3F27;
 }
 .correct{
     background-color: green;
+}
+.pivot{
+    background-color: #3F9AF0;
+}
+.pivotwrong{
+    background: -moz-linear-gradient(128deg, #FF3F27 50%, #3F9AF0 50%); /* ff3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(50%, #3F9AF0), color-stop(50%, #FF3F27)); /* safari4+,chrome */
+    background: -webkit-linear-gradient(128deg, #FF3F27 50%, #3F9AF0 50%); /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(128deg, #FF3F27 50%, #3F9AF0 50%); /* opera 11.10+ */
+    background: -ms-linear-gradient(128deg, #FF3F27 50%, #3F9AF0 50%); /* ie10+ */
+    background: linear-gradient(322deg, #FF3F27 50%, #3F9AF0 50%); /* w3c */
 }

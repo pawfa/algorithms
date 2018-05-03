@@ -19,7 +19,7 @@ class SeriesBlock extends Component {
         resultClass: PropTypes.string.isRequired,
     };
 
-    sendName = () =>{
+    sendId = () =>{
         if(this.props.click){
             this.props.click(this.props.id);
         }
@@ -33,10 +33,10 @@ class SeriesBlock extends Component {
             connectDragSource,
             connectDropTarget,
         } = this.props;
-        const opacity = isDragging ? 0 : 1;
-        const {resultClass} = this.props;
+        const opacity = isDragging ? {opacity: '0'} : {opacity: '1'};
+        const {resultClass,pointer} = this.props;
         return connectDragSource(
-            connectDropTarget(<div className={'block '+resultClass} style={{opacity }} onClick={this.sendName}>{number}</div>),
+            connectDropTarget(<div className={'block '+resultClass} style={Object.assign(opacity, pointer)} onClick={this.sendId}>{number}</div>),
         );
     }
 }

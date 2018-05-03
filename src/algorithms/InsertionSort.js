@@ -17,7 +17,7 @@ export function insertionSort(iteration,initialData,data){
 
     for(let k = array.length; k--;) {
         if(array[k].value !== data[k].value){
-            wrongArray.push(k);
+            wrongArray.push(array[k].id);
         }
     }
     console.log(array);

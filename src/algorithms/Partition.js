@@ -3,13 +3,13 @@ export function partition(iteration, initialData, data, pivot) {
     let wrongArray = [];
 
     partitionImpl(array, 0, array.length - 1,pivot);
-
+    console.log(array);
     let end = endSorting(array, data);
 
     console.log(array);
     for (let k = array.length; k--;) {
         if (array[k].value !== data[k].value) {
-            wrongArray.push(k);
+            wrongArray.push(array[k].id);
         }
     }
 
@@ -31,7 +31,7 @@ export function partition(iteration, initialData, data, pivot) {
 function partitionImpl(arr, left, right,piv) {
     let i = left;
     let j = right;
-    let pivot = arr[4];
+    let pivot = arr.filter((e)=> e.id === piv);
     console.log(pivot);
     let temp;
 

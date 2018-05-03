@@ -2,15 +2,10 @@ import React, {Component} from 'react'
 import {connect} from "react-redux";
 import {changeAllSeries, setAlgorithmType} from "../actions";
 import './SeriesInputContainer.css'
-import ReactMaterialSelect from 'react-material-select'
-import 'react-material-select/lib/css/reactMaterialSelect.css'
 
 class SeriesInputContainer extends Component {
     constructor() {
         super();
-        this.state = {
-            disabled: false
-        };
     }
 
     changeStringToArray = (event) => {
@@ -26,13 +21,18 @@ class SeriesInputContainer extends Component {
     };
 
     chooseSortingAlgorithm = (event) =>{
-        console.log(event.value);
-        this.props.setAlgorithmType(event.value);
+        console.log(event.target.value);
+        this.props.setAlgorithmType(event.target.value);
     };
 
     render() {
-        const {initialSeries} = this.props;
+        const {initialSeries, algorithmType} = this.props;
         const inputSeries = [];
+        const buttonNames = ["SELECTIONSORT","INSERTIONSORT","MERGESORT","PARTITION"];
+
+        const buttons = buttonNames.map((e,i)=>{
+            let active = e === algorithmType ? ' active': '';
+            return <button className={'button'+ active} value={e} onClick={this.chooseSortingAlgorithm} key={i}>{e}</button>});
         for (let i = 0; i < initialSeries.length; i++) {
             inputSeries.push(initialSeries[i].value)
         }
@@ -47,26 +47,21 @@ class SeriesInputContainer extends Component {
                                    type="text"
                                    value={inputSeries}
                                    className="validate"
-                                   disabled={(this.state.disabled) ? "disabled" : ""}
                                    onChange={(event) => {
                                        this.changeStringToArray(event)
                                    }}/>
                         </div>
                     </div>
-                    <ReactMaterialSelect label='Choose algorithm' defaultValue='Partition' onChange={this.chooseSortingAlgorithm}>
-                        <option dataValue="SelectionSort">SelectionSort</option>
-                        <option dataValue="InsertionSort">InsertionSort</option>
-                        <option dataValue="MergeSort">MergeSort</option>
-                        <option dataValue="Partition">Partition</option>
-                    </ReactMaterialSelect>
                 </form>
+            <div>{buttons}</div>
         </div>
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        initialSeries: state.seriesReducer.initialSeries
+        initialSeries: state.seriesReducer.initialSeries,
+        algorithmType: state.seriesReducer.algorithmType
     }
 };
 

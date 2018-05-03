@@ -20,24 +20,43 @@ class SeriesInputContainer extends Component {
 
     createBlock(i, numberObject) {
         const {value, id} = numberObject;
-        const {wrongArray, disabledArray} = this.props;
+        const {wrongArray, disabledArray,pivot} = this.props;
         let blockClass = '';
-        if(wrongArray.includes(i)){
-            blockClass = 'wrong'
-        }else if(disabledArray.includes(i)){
-            blockClass = 'disabled'
+        if(this.props.algorithmType === 'PARTITION' && pivot === id){
+            blockClass = 'pivot';
         }
-        let clickable = this.props.algorithmType === 'PARTITION' ? this.choosePivot : undefined;
-        console.log(this.props.algorithmType);
+
+        if(wrongArray.includes(id)){
+            blockClass = blockClass +'wrong'
+        }else if(disabledArray.includes(id)){
+            blockClass = blockClass+'disabled'
+        }
+
+        let clickable = undefined;
+        let pointer = null;
+        if(this.props.algorithmType === 'PARTITION'){
+            clickable = this.choosePivot;
+            pointer = {'cursor': 'pointer'}
+        }
         return (
-            <SeriesBlock click={clickable} key={id} index={i} id={id} number={value} resultClass={blockClass} moveBlock={this.moveBlock}/>
+            <SeriesBlock click={clickable} key={id} pointer={pointer} index={i} id={id} number={value} resultClass={blockClass} moveBlock={this.moveBlock}/>
         )
     }
 
     render() {
         const {workingSeries, iteration, end} = this.props;
         const blocks = [];
-        const showMessage = end ? this.props.algorithmType === 'PARTITION' ? 'Series partitioned' :"Series is sorted" :"Iteration number: "+iteration;
+        let showMessage = "Iteration number: "+iteration;
+        if(this.props.algorithmType === 'PARTITION'){
+            if(end){
+                showMessage = 'Series partitioned';
+            }else{
+                showMessage = "Choose pivot";
+            }
+        }else if(end){
+            showMessage = "Series is sorted";
+        }
+        // const showMessage = end ? this.props.algorithmType === 'PARTITION' ? 'Series partitioned' :"Series is sorted" :"Iteration number: "+iteration;
         for (let i = 0; i < workingSeries.length; i++) {
             blocks.push(this.createBlock(i, workingSeries[i]));
         }
@@ -50,7 +69,7 @@ class SeriesInputContainer extends Component {
             <div className={'blockContainer'}>{blocks}</div>
             </div>
             <div className="row">
-            <button type='text' disabled={end} onClick={()=>this.props.checkCorrectness()}>Check</button>
+            <button className={'buttonPresentation'} type='text' disabled={end} onClick={()=>this.props.checkCorrectness()}>Check</button>
             </div>
         </div>
     }
@@ -64,7 +83,8 @@ const mapStateToProps = (state) => {
         correct: state.seriesReducer.correct,
         wrongArray: state.seriesReducer.wrongArray,
         disabledArray: state.seriesReducer.disabledArray,
-        end: state.seriesReducer.end
+        end: state.seriesReducer.end,
+        pivot:state.seriesReducer.pivot
     }
 };
 
