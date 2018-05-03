@@ -4,12 +4,10 @@ let iter;
 let dataGlobal;
 let arrayGlobal;
 let wrongArray = [];
-let disabledArray = [];
 
 export function mergeSort(iteration, initialData, data) {
     console.log(initialData);
     wrongArray = [];
-    disabledArray = [];
     counter = 0;
     dataGlobal = data;
     arrayGlobal = initialData.map(a => Object.assign({}, a));
@@ -20,22 +18,16 @@ export function mergeSort(iteration, initialData, data) {
     let completeArray = mergeSortImp(initialData);
     let end = endSorting(completeArray, data);
 
-    // disabledArray = initialData.filter( function( el ) {
-    //     return !iterationArray.includes( el );
-    // } ).map((el)=>{return el.value});
-
     if (wrongArray.length > 0) {
         return {
             result: false,
             wrongArray: wrongArray,
-            disabledArray: disabledArray,
             end: end
         };
     } else {
         return {
             result: true,
             wrongArray: [],
-            disabledArray: [],
             end: end
         };
     }

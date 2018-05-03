@@ -10,7 +10,6 @@ const initialState = {
     algorithmType: 'PARTITION',
     correct: '',
     wrongArray: [],
-    disabledArray: [],
     pivot: 1,
     end: false
 };
@@ -78,14 +77,13 @@ const seriesReducer = (state = initialState, action) =>{
                     };
                 }
                 case 'MERGESORT': {
-                    let {result, wrongArray, disabledArray, end} = mergeSort(state.iteration, state.initialSeries, state.workingSeries);
+                    let {result, wrongArray, end} = mergeSort(state.iteration, state.initialSeries, state.workingSeries);
 
                     return {
                         ...state,
                         iteration: (result ? state.iteration + 1 : state.iteration),
                         correct: result,
                         wrongArray: wrongArray,
-                        disabledArray: disabledArray,
                         end: end
                     };
                 }

@@ -30,3 +30,6 @@
     background: -ms-linear-gradient(128deg, #FF3F27 50%, #3F9AF0 50%); /* ie10+ */
     background: linear-gradient(322deg, #FF3F27 50%, #3F9AF0 50%); /* w3c */
 }
+.disabled{
+    opacity: 0.5 !important;
+}

@@ -20,7 +20,7 @@ class SeriesInputContainer extends Component {
 
     createBlock(i, numberObject) {
         const {value, id} = numberObject;
-        const {wrongArray, disabledArray,pivot} = this.props;
+        const {wrongArray, pivot} = this.props;
         let blockClass = '';
         if(this.props.algorithmType === 'PARTITION' && pivot === id){
             blockClass = 'pivot';
@@ -28,8 +28,6 @@ class SeriesInputContainer extends Component {
 
         if(wrongArray.includes(id)){
             blockClass = blockClass +'wrong'
-        }else if(disabledArray.includes(id)){
-            blockClass = blockClass+'disabled'
         }
 
         let clickable = undefined;
@@ -82,7 +80,6 @@ const mapStateToProps = (state) => {
         iteration: state.seriesReducer.iteration,
         correct: state.seriesReducer.correct,
         wrongArray: state.seriesReducer.wrongArray,
-        disabledArray: state.seriesReducer.disabledArray,
         end: state.seriesReducer.end,
         pivot:state.seriesReducer.pivot
     }
