@@ -44,12 +44,9 @@ const seriesReducer = (state = initialState, action) =>{
                 pivot: action.payload
             };
         case 'CHANGE_BLOCKS_ORDER':
-            const [dragIndex,hoverIndex,dragNumber] = action.payload;
-            const seriesTmp = state.workingSeries.slice();
-            const tmp = dragNumber;
-            seriesTmp[dragIndex] = seriesTmp[hoverIndex];
-            seriesTmp[hoverIndex] = tmp;
-            return { ...state, workingSeries: seriesTmp };
+            const [result] = action.payload;
+            return { ...state, workingSeries: result };
+
         case 'CHECK_ALGORITHM':
             switch(state.algorithmType){
                 case 'SELECTIONSORT': {
@@ -61,7 +58,7 @@ const seriesReducer = (state = initialState, action) =>{
                         iteration: (result ? state.iteration + 1 : state.iteration),
                         correct: result,
                         wrongArray: wrongArray,
-                        end: state.iteration === state.initialSeries.length - 1
+                        end: state.iteration === state.initialSeries.length - 1 && wrongArray.length === 0
                     };
                 }
                 case 'INSERTIONSORT': {
@@ -73,7 +70,7 @@ const seriesReducer = (state = initialState, action) =>{
                         iteration: (result ? state.iteration + 1 : state.iteration),
                         correct: result,
                         wrongArray: wrongArray,
-                        end: state.iteration === state.initialSeries.length - 1
+                        end: state.iteration === state.initialSeries.length - 1 && wrongArray.length === 0
                     };
                 }
                 case 'MERGESORT': {

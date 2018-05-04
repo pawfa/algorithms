@@ -1,7 +1,4 @@
 .blockContainer{
-    display: flex;
-    flex-direction: row;
-    /*width: 70%;*/
     margin: 0 auto;
     justify-content: center;
 }
@@ -21,7 +18,7 @@ h5{
     padding: 10px;
     cursor: pointer;
     outline: 0;
-    color: #000;
+    color: black;
     overflow:hidden;
     z-index: 1;
     background-color: #F1ECE9;
@@ -33,7 +30,7 @@ h5{
 }
 .buttonPresentation:focus{
     background-color: #F1ECE9;
-    color: #485058;
+    color: #5C566B;
 }
 .buttonPresentation:hover {
     color: white;
@@ -41,7 +38,7 @@ h5{
 .buttonPresentation:before {
     content: "";
     position: absolute;
-    background: #000;
+    background: #5C566B;
     bottom: 0;
     left: 0;
     right: 0;

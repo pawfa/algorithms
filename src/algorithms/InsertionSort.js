@@ -22,6 +22,7 @@ export function insertionSort(iteration,initialData,data){
     }
     console.log(array);
     console.log(data);
+    console.log(wrongArray);
 
     if(wrongArray.length >0){
         return {

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from "react-redux";
 import {changeAllSeries, setAlgorithmType} from "../actions";
 import './SeriesInputContainer.css'
+import {Modal, Button, Row, Col} from "react-materialize";
 
 class SeriesInputContainer extends Component {
     constructor() {
@@ -38,9 +39,9 @@ class SeriesInputContainer extends Component {
         }
 
         return <div className={'container inputContainer'}>
-
+                <Row className="mainRow">
                 <form className="inputForm">
-                    <div className="row">
+                    <Row>
                         <div className="input-field">
                             <input placeholder="Series"
                                    id="first_name"
@@ -51,8 +52,18 @@ class SeriesInputContainer extends Component {
                                        this.changeStringToArray(event)
                                    }}/>
                         </div>
-                    </div>
+                    </Row>
+
                 </form>
+                    <Modal
+                        header='Explanation'
+                        trigger={<Button className={'buttonModal '}>What is it?</Button>}>
+                        <p>It's an application where you can try to understand how some algorithms work. First you need to type input series which you want to sort. Then you choose algorithm
+                            type by clicking on one of the buttons below. After choosing algorithm you need to to
+                            set series of numbers in correct order depending of consecutive iterations.
+                            In partition algorithm you also have to pick a pivot</p>
+                    </Modal>
+                </Row>
             <div>{buttons}</div>
         </div>
     }
