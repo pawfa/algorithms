@@ -7,12 +7,13 @@ const initialState = {
     initialSeries:[],
     workingSeries: [],
     iteration: 1,
-    algorithmType: 'PARTITION',
+    algorithmType: 'SELECTIONSORT',
     correct: '',
     wrongArray: [],
     pivot: 1,
     end: false
 };
+
 for(let i = 6; i > 0; i--){
     initialState.initialSeries.push({
         id:i,
@@ -34,11 +35,10 @@ const seriesReducer = (state = initialState, action) =>{
             };
         case 'ALGORITHM_TYPE':
             return {
-                ...initialState,
+                ...state,
                 algorithmType: action.payload
             };
         case 'SET_PIVOT':
-            console.log(action.payload);
             return {
                 ...state,
                 pivot: action.payload

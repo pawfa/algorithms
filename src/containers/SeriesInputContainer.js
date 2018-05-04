@@ -22,7 +22,6 @@ class SeriesInputContainer extends Component {
     };
 
     chooseSortingAlgorithm = (event) =>{
-        console.log(event.target.value);
         this.props.setAlgorithmType(event.target.value);
     };
 
