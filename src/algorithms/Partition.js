@@ -13,19 +13,11 @@ export function partition(iteration, initialData, data, pivot) {
         }
     }
 
-    if (wrongArray.length > 0) {
-        return {
-            result: false,
-            wrongArray: wrongArray,
-            end: end
-        };
-    } else {
-        return {
-            result: true,
-            wrongArray: [],
-            end: end
-        };
-    }
+    return {
+        result: !wrongArray.length,
+        wrongArray: wrongArray,
+        end: end
+    };
 }
 
 function partitionImpl(arr, left, right,piv) {

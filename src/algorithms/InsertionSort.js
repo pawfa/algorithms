@@ -20,19 +20,9 @@ export function insertionSort(iteration,initialData,data){
             wrongArray.push(array[k].id);
         }
     }
-    console.log(array);
-    console.log(data);
-    console.log(wrongArray);
 
-    if(wrongArray.length >0){
-        return {
-            result: false,
-            wrongArray: wrongArray
-        };
-    }else{
-        return {
-            result: true,
-            wrongArray: []
-        };
-    }
+    return {
+        result: !wrongArray.length,
+        wrongArray: wrongArray
+    };
 }

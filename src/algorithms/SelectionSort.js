@@ -20,15 +20,9 @@ export function selectionSort(iteration,initialData,data){
             wrongArray.push(array[k].id);
         }
     }
-    if(wrongArray.length >0){
-        return {
-            result: false,
-            wrongArray: wrongArray
-        };
-    }else{
-        return {
-            result: true,
-            wrongArray: []
-        };
-    }
+
+    return {
+        result: !wrongArray.length,
+        wrongArray: wrongArray
+    };
 }

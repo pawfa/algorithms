@@ -35,7 +35,9 @@ const seriesReducer = (state = initialState, action) =>{
             };
         case 'ALGORITHM_TYPE':
             return {
-                ...state,
+                ...initialState,
+                initialSeries: state.initialSeries,
+                workingSeries: state.workingSeries,
                 algorithmType: action.payload
             };
         case 'SET_PIVOT':
