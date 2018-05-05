@@ -3,16 +3,16 @@ export function partition(iteration, initialData, data, pivot) {
     let wrongArray = [];
 
     partitionImpl(array, 0, array.length - 1,pivot);
-    console.log(array);
     let end = endSorting(array, data);
 
-    console.log(array);
+
     for (let k = array.length; k--;) {
         if (array[k].value !== data[k].value) {
             wrongArray.push(array[k].id);
         }
     }
-
+    console.log(array);
+    console.log(wrongArray);
     return {
         result: !wrongArray.length,
         wrongArray: wrongArray,
@@ -23,8 +23,7 @@ export function partition(iteration, initialData, data, pivot) {
 function partitionImpl(arr, left, right,piv) {
     let i = left;
     let j = right;
-    let pivot = arr.filter((e)=> e.id === piv);
-    console.log(pivot);
+    let pivot = arr.filter((e)=> e.id === piv)[0];
     let temp;
 
     while(i <= j){
@@ -34,11 +33,12 @@ function partitionImpl(arr, left, right,piv) {
             temp = arr[i];
             arr[i] = arr[j];
             arr[j] = temp;
+            console.log(arr[i]);
+            console.log(arr);
             i++;
             j--;
         }
     }
-    console.log(i);
     return i;
 }
 

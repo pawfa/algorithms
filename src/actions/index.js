@@ -21,3 +21,8 @@ export const setPivot = (pivotId) => ({
     type: 'SET_PIVOT',
     payload: pivotId
 });
+
+export const sendGraphData = (data) =>({
+    type: 'SORT_GRAPH',
+    payload: data
+});

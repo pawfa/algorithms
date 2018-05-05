@@ -1,19 +1,14 @@
 import React, {Component} from 'react'
-import {connect} from "react-redux";
-import GraphComponent from "../components/GraphComponent";
+import Chart from "../components/GraphComponents/Chart/Chart";
 
 class GraphContainer extends Component {
 
+
     render(){
-        return <GraphComponent/>
+        return <div className="App-chart-container">
+            <Chart data={this.props.data} />
+        </div>
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        initialSeries: state.seriesReducer.initialSeries,
-        algorithmType: state.seriesReducer.algorithmType
-    }
-};
-GraphContainer = connect(mapStateToProps)(GraphContainer);
 export default GraphContainer;

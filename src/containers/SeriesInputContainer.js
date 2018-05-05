@@ -58,9 +58,9 @@ class SeriesInputContainer extends Component {
                         header='Explanation'
                         trigger={<Button className={'buttonModal '}>What is it?</Button>}>
                         <p>It's an application where you can try to understand how some algorithms work. First you need to type input series which you want to sort. Then you choose algorithm
-                            type by clicking on one of the buttons below. After choosing algorithm you need to to
+                            type by clicking on one of the buttons below. After choosing algorithm you need to
                             set series of numbers in correct order depending of consecutive iterations.
-                            In partition algorithm you also have to pick a pivot</p>
+                            In partition algorithm you also have to pick a pivot.</p>
                     </Modal>
                 </Row>
             <div>{buttons}</div>

@@ -9,7 +9,6 @@ class App extends Component {
     return (
       <div className="App">
           <SeriesInputContainer/>
-          <GraphContainer/>
           <SeriesPresentationContainer/>
       </div>
     );

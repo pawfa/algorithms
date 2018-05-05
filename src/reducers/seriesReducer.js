@@ -6,11 +6,12 @@ import {partition} from "../algorithms/Partition";
 const initialState = {
     initialSeries:[],
     workingSeries: [],
+    wrongArray: [],
+    chartArray: [],
     iteration: 1,
+    pivot: 1,
     algorithmType: 'SELECTIONSORT',
     correct: '',
-    wrongArray: [],
-    pivot: 1,
     end: false
 };
 
@@ -23,6 +24,10 @@ for(let i = 6; i > 0; i--){
         id:i,
         value:i
     });
+    initialState.chartArray.push({
+        id:i,
+        value:i
+    });
 }
 
 const seriesReducer = (state = initialState, action) =>{
@@ -30,19 +35,23 @@ const seriesReducer = (state = initialState, action) =>{
         case 'CHANGE_ALL_SERIES':
             return {
                 ...initialState,
+                algorithmType: state.algorithmType,
                 initialSeries: action.payload,
+                chartArray: action.payload,
                 workingSeries: action.payload,
             };
         case 'ALGORITHM_TYPE':
             return {
                 ...initialState,
                 initialSeries: state.initialSeries,
-                workingSeries: state.workingSeries,
+                workingSeries: state.initialSeries,
+                chartArray: state.initialSeries,
                 algorithmType: action.payload
             };
         case 'SET_PIVOT':
             return {
-                ...state,
+                ...initialState,
+                algorithmType: state.algorithmType,
                 pivot: action.payload
             };
         case 'CHANGE_BLOCKS_ORDER':
@@ -100,7 +109,11 @@ const seriesReducer = (state = initialState, action) =>{
                 default:
                     return state;
             }
-
+        case 'SORT_GRAPH':
+            return {
+                ...state,
+                chartArray: action.payload
+            };
         default:
             return state;
     }
