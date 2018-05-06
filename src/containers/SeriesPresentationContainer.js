@@ -10,21 +10,20 @@ import {selectionSortChart} from "../algorithms/SelectionSort";
 class SeriesInputContainer extends Component {
 
     runSorting = () =>{
-        const {chartArray} = this.props;
-        const self = this;
+        const {chartArray} = this.props.chartData;
+        selectionSortChart(chartArray,this.props.sendGraphData);
 
-        let callCount = 0;
-        let repeater = setInterval(function () {
-            if (callCount < chartArray.length) {
-                self.props.sendGraphData(selectionSortChart(chartArray,callCount));
-                callCount += 1;
-            } else {
-                clearInterval(repeater);
-            }
-        }, 1000);
-
-        console.log(this.props.chartArray);
-
+        // const self = this;
+        //
+        // let callCount = 0;
+        // let repeater = setInterval(function () {
+        //     if (callCount < chartArray.length) {
+        //         self.props.sendGraphData(selectionSortChart(chartArray,callCount));
+        //         callCount += 1;
+        //     } else {
+        //         clearInterval(repeater);
+        //     }
+        // }, 1000);
     };
 
     onDragEnd = (result) => {
@@ -91,7 +90,8 @@ class SeriesInputContainer extends Component {
     }
 
     render() {
-        const {workingSeries, iteration, end, chartArray} = this.props;
+        const {workingSeries, iteration, end, chartData} = this.props;
+
         const blocks = [];
         let showMessage = "Iteration number: " + iteration;
         if (this.props.algorithmType === 'PARTITION') {
@@ -103,14 +103,14 @@ class SeriesInputContainer extends Component {
         } else if (end) {
             showMessage = "Series is sorted";
         }
-
         for (let i = 0; i < workingSeries.length; i++) {
             blocks.push(this.createBlock(i, workingSeries[i]));
         }
+
         return (
             <div className={'container'}>
                 <div className="row">
-                    <GraphContainer data={chartArray}/>
+                    <GraphContainer chartData={chartData}/>
                     <button className={'buttonPresentation'} type='text' onClick={this.runSorting}>Sort</button>
                 </div>
 
@@ -177,9 +177,10 @@ const mapStateToProps = (state) => {
         initialSeries: state.seriesReducer.initialSeries,
         workingSeries: state.seriesReducer.workingSeries,
         wrongArray: state.seriesReducer.wrongArray,
-        chartArray: state.seriesReducer.chartArray,
+        chartData: state.seriesReducer.chartData,
         iteration: state.seriesReducer.iteration,
         pivot: state.seriesReducer.pivot,
+        current: state.seriesReducer.current,
         algorithmType: state.seriesReducer.algorithmType,
         correct: state.seriesReducer.correct,
         end: state.seriesReducer.end

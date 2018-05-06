@@ -7,15 +7,20 @@ const initialState = {
     initialSeries:[],
     workingSeries: [],
     wrongArray: [],
-    chartArray: [],
+    chartData: {
+        chartArray: [],
+        current: 0,
+        minIndex: 0
+    },
     iteration: 1,
     pivot: 1,
+    current: 0,
     algorithmType: 'SELECTIONSORT',
     correct: '',
     end: false
 };
 
-for(let i = 6; i > 0; i--){
+for(let i = 10; i > 0; i--){
     initialState.initialSeries.push({
         id:i,
         value:i
@@ -24,7 +29,7 @@ for(let i = 6; i > 0; i--){
         id:i,
         value:i
     });
-    initialState.chartArray.push({
+    initialState.chartData.chartArray.push({
         id:i,
         value:i
     });
@@ -37,7 +42,10 @@ const seriesReducer = (state = initialState, action) =>{
                 ...initialState,
                 algorithmType: state.algorithmType,
                 initialSeries: action.payload,
-                chartArray: action.payload,
+                chartData: {
+                    ...state.chartData,
+                    chartArray: action.payload
+                },
                 workingSeries: action.payload,
             };
         case 'ALGORITHM_TYPE':
@@ -110,9 +118,10 @@ const seriesReducer = (state = initialState, action) =>{
                     return state;
             }
         case 'SORT_GRAPH':
+
             return {
                 ...state,
-                chartArray: action.payload
+                chartData: action.payload
             };
         default:
             return state;

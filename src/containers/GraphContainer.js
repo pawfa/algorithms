@@ -6,7 +6,7 @@ class GraphContainer extends Component {
 
     render(){
         return <div className="App-chart-container">
-            <Chart data={this.props.data} />
+            <Chart chartData={this.props.chartData} data={[5,10,1,3]} size={[500,500]} />
         </div>
     }
 }

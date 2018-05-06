@@ -2,7 +2,11 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/src/components/GraphComponents/Axes" />
+      <excludeFolder url="file://$MODULE_DIR$/src/components/GraphComponents/Axis" />
+      <excludeFolder url="file://$MODULE_DIR$/src/components/GraphComponents/Bars" />
+    </content>
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
