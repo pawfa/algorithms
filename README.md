@@ -3,7 +3,7 @@ Application where you need to set series in correct order through every algorith
 
 ## Description
 
-Example application to learn React Redux. You can see demo [here](http://algorithms.pawfa.usermd.net/). Every code review and criticism is welcome.
+Example application to learn Redux and D3.js. You can see demo at an early stage [here](http://algorithms.pawfa.usermd.net/). Every code review and criticism is welcome.
 
 
 ## Getting Started
