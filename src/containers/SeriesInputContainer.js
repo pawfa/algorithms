@@ -2,12 +2,9 @@ import React, {Component} from 'react'
 import {connect} from "react-redux";
 import {changeAllSeries, setAlgorithmType} from "../actions";
 import './SeriesInputContainer.css'
-import {Modal, Button, Row, Col} from "react-materialize";
+import {Modal, Button, Row} from "react-materialize";
 
 class SeriesInputContainer extends Component {
-    constructor() {
-        super();
-    }
 
     changeStringToArray = (event) => {
         let seriesArray = event.target.value.split(",");
