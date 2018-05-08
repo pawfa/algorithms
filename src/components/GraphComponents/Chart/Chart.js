@@ -7,28 +7,24 @@ class Chart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            svg: "",
-            scales: {},
+            width: 0,
             axes: {}
         }
     }
 
     componentDidMount() {
-        this.createBarChart()
+        this.createBarChart();
     }
 
     componentDidUpdate() {
-        // this.createBarChart()
+        console.log(this.props);
         this.updateBarChart();
     }
 
     createBarChart = () => {
         const margin = {top: 30, right: 10, bottom: 30, left: 50},
-            width = 500 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom,
-            barWidth = 40,
-            barOffset = 20;
-
+            width = 600 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
 
         const {chartArray} = this.props.chartData;
         const data = chartArray.map(e => Number(e.value));
@@ -36,54 +32,50 @@ class Chart extends Component {
 
         const yScale = d3.scaleLinear()
             .domain([0, dataMax])
-            .range([0, height]);
+            .range([height, 0]);
 
         const xScale = d3.scaleBand()
             .domain(d3.range(0, data.length))
             .range([0, width]);
 
         const colors = d3.scaleLinear()
-            .domain([0, data.length * .33, data.length * .66, data.length])
-            .range(['#d6e9c6', '#bce8f1', '#faebcc', '#ebccd1']);
+            .domain([0, dataMax])
+            .range(['#D3CCE3', '#504B6B']);
+
 
         const svg = d3.select('svg')
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-            .style('background', '#bce8f1')
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
             .selectAll('rect').data(data)
-            .enter().append('rect')
+            .enter().append("rect")
             .styles({
                 'fill': function(data, i) {
-                    return colors(i);
+                    return colors(data);
                 },
                 'stroke': '#31708f',
                 'stroke-width': '1'
             })
+            .attr("class", "bar")
+            .attr("y", yScale(0))
+            .attr("height", 0)
             .attr('width', xScale.bandwidth())
             .attr('x', function(data, i) {
-                return xScale(i);
+                return i*xScale.bandwidth();
             })
-            .attr('height', 0)
-            .attr('y', height);
-
-        svg.transition()
-            .attr('height', function(data) {
-                return yScale(data);
-            })
-            .attr('y', function(data) {
-                return height - yScale(data);
-            })
-            .delay(function(data, i) {
-                return i * 20;
-            })
-            .duration(2000)
-            .ease(d3.easeElastic);
+            .transition().duration(200)
+            .attr("x", function(d,i) { return i*xScale.bandwidth(); }) // (d) is one item from the data array, x is the scale object from above
+            .attr("width", xScale.bandwidth()) // constant, so no callback function(d) here
+            .transition()
+            .duration(700)
+            .ease(d3.easeBounce)
+            .attr("y", function(d) { return yScale(d); })
+            .attr("height", function(d) { return height - yScale(d); }); // flip the height, because y's domain is bottom up, but SVG renders top down
 
 
         const verticalGuideScale = d3.scaleLinear()
-            .domain([0, d3.max(data)])
+            .domain([0, dataMax])
             .range([height, 0]);
 
         const vAxis = d3.axisLeft(verticalGuideScale)
@@ -103,84 +95,79 @@ class Chart extends Component {
                 stroke: "#3c763d"
             });
 
-        const hAxis = d3.axisBottom(xScale)
-            .ticks(data.length);
-
-        const horizontalGuide = d3.select('svg').append('g');
-        hAxis(horizontalGuide);
-        horizontalGuide.attr('transform', 'translate(' + margin.left + ', ' + (height + margin.top) + ')');
-        horizontalGuide.attr("class", "x axis");
-        horizontalGuide.selectAll('path')
-            .styles({
-                fill: 'none',
-                stroke: "#3c763d"
-            });
-        horizontalGuide.selectAll('line')
-            .styles({
-                stroke: "#3c763d"
-            });
-
         this.setState({
-            svg: svg,
-            scales: { xScale: xScale, yScale: yScale },
-            axes: { xAxis: hAxis, yAxis: vAxis }
-        })
+            height: height,
+            scales: { xScale: xScale,yScale: verticalGuideScale },
+            colors: colors
+        });
     };
 
     updateBarChart = () => {
 
-        const margin = {top: 30, right: 10, bottom: 30, left: 50},
-            width = 500 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
+        const{height} = this.state;
 
         const {chartArray} = this.props.chartData;
-        const {xAxis, yAxis} = this.state.axes;
-        const data = chartArray.map(e => Number(e.value)).reverse();
+        const {xScale, yScale} = this.state.scales;
+        const {colors} = this.state;
+        const data = chartArray.map(e => Number(e.value));
         const dataMax = Math.max(...data);
-
-        const yScale = d3.scaleLinear()
-            .domain([0, dataMax])
-            .range([0, height]);
-
-        const xScale = d3.scaleBand()
-            .domain(d3.range(0, data.length))
-            .range([0, width]);
-
-
         const svg = d3.select('svg');
-        svg.select('.x.axis').transition().duration(300).call(xAxis);
 
-        // same for yAxis but with more transform and a title
-        svg.select(".y.axis").transition().duration(300).call(yAxis);
+        colors.domain([0, dataMax]);
+        yScale.domain([0, dataMax]);
+        xScale.domain(d3.range(0, data.length));
 
-        const bars = svg.selectAll("rect").data(data);
+        const bars = svg.select('g').selectAll("rect").data(data);
+
+        bars.exit()
+            .transition()
+            .duration(300)
+            .attr("y", yScale(0))
+            .attr("height", height - yScale(0))
+            .style('fill-opacity', 1e-6)
+            .remove();
 
         bars.enter().append("rect")
             .attr("class", "bar")
             .attr("y", yScale(0))
-            .attr("height", height - yScale(0));
+            .attr("height", 0)
+            .attr('x', (data.length-1)*xScale.bandwidth()
+            );
 
-        const verticalGuideScale = d3.scaleLinear()
-            .domain([0, d3.max(data)])
-            .range([height, 0]);
+        bars.transition().styles({
+            'fill': function(data, i) {
+                return colors(data);
+            },
+            'stroke': '#31708f',
+            'stroke-width': '1'
+        });
 
-        bars.transition()
-            .attr('height', function(data) {
-            return height - verticalGuideScale(data);
-        })
-            .attr('y', function(data) {
-                return height - verticalGuideScale(data);
-            })
-            .delay(function(data, i) {
-                return i * 20;
-            })
-            .duration(2000)
-            .ease(d3.easeElastic);
+        bars.merge(bars).transition().styles({
+                'fill': function(data, i) {
+                    return colors(data);
+                },
+                'stroke': '#31708f',
+                'stroke-width': '1'
+            });
+            bars.transition().duration(200)
+                .styles({
+                    'fill': function(data, i) {
+                        return colors(data);
+                    },
+                    'stroke': '#31708f',
+                    'stroke-width': '1'
+                })
+            .attr("x", function(d,i) { return i*xScale.bandwidth(); }) // (d) is one item from the data array, x is the scale object from above
+            .attr("width", xScale.bandwidth()) // constant, so no callback function(d) here
+                .transition()
+                .duration(700)
+                .ease(d3.easeBounce)
+            .attr("y", function(d) { return yScale(d); })
+            .attr("height", function(d) { return height - yScale(d); }); // flip the height, because y's domain is bottom up, but SVG renders top down
 
     };
 
     render() {
-
         return <svg ref={node => this.node = node}>
         </svg>
     }

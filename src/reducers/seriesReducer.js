@@ -20,7 +20,7 @@ const initialState = {
     end: false
 };
 
-for(let i = 10; i > 0; i--){
+for(let i = 6; i > 0; i--){
     initialState.initialSeries.push({
         id:i,
         value:i
@@ -43,7 +43,7 @@ const seriesReducer = (state = initialState, action) =>{
                 algorithmType: state.algorithmType,
                 initialSeries: action.payload,
                 chartData: {
-                    ...state.chartData,
+                    ...initialState.chartData,
                     chartArray: action.payload
                 },
                 workingSeries: action.payload,
@@ -51,9 +51,12 @@ const seriesReducer = (state = initialState, action) =>{
         case 'ALGORITHM_TYPE':
             return {
                 ...initialState,
-                initialSeries: state.initialSeries,
-                workingSeries: state.initialSeries,
-                chartArray: state.initialSeries,
+                initialSeries: state.workingSeries,
+                workingSeries: state.workingSeries,
+                chartData: {
+                    ...initialState.chartData,
+                    chartArray: state.workingSeries
+                },
                 algorithmType: action.payload
             };
         case 'SET_PIVOT':
