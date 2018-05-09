@@ -6,24 +6,22 @@ import './SeriesPresentationContainer.css'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import GraphContainer from "./GraphContainer";
 import {selectionSortChart} from "../algorithms/SelectionSort";
+import {insertionSortChart} from "../algorithms/InsertionSort";
 
 class SeriesInputContainer extends Component {
 
     runSorting = () =>{
         const {chartArray} = this.props.chartData;
-        selectionSortChart(chartArray,this.props.sendGraphData);
+        let array = chartArray.map(a => Object.assign({}, a));
 
-        // const self = this;
-        //
-        // let callCount = 0;
-        // let repeater = setInterval(function () {
-        //     if (callCount < chartArray.length) {
-        //         self.props.sendGraphData(selectionSortChart(chartArray,callCount));
-        //         callCount += 1;
-        //     } else {
-        //         clearInterval(repeater);
-        //     }
-        // }, 1000);
+        switch(this.props.algorithmType){
+            case 'SELECTIONSORT':
+                selectionSortChart(array,this.props.sendGraphData,0);
+                break;
+            case 'INSERTIONSORT':
+                insertionSortChart(array,this.props.sendGraphData,0);
+        }
+
     };
 
     onDragEnd = (result) => {

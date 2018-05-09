@@ -10,7 +10,8 @@ const initialState = {
     chartData: {
         chartArray: [],
         current: 0,
-        minIndex: 0
+        minIndex: 0,
+        iteration: -1
     },
     iteration: 1,
     pivot: 1,
@@ -51,11 +52,11 @@ const seriesReducer = (state = initialState, action) =>{
         case 'ALGORITHM_TYPE':
             return {
                 ...initialState,
-                initialSeries: state.workingSeries,
-                workingSeries: state.workingSeries,
+                initialSeries: state.initialSeries,
+                workingSeries: state.initialSeries,
                 chartData: {
                     ...initialState.chartData,
-                    chartArray: state.workingSeries
+                    chartArray: state.initialSeries
                 },
                 algorithmType: action.payload
             };
@@ -72,7 +73,6 @@ const seriesReducer = (state = initialState, action) =>{
         case 'CHECK_ALGORITHM':
             switch(state.algorithmType){
                 case 'SELECTIONSORT': {
-                    console.log(state.iteration);
                     let {result, wrongArray} = selectionSort(state.iteration, state.initialSeries, state.workingSeries);
 
                     return {
@@ -84,7 +84,6 @@ const seriesReducer = (state = initialState, action) =>{
                     };
                 }
                 case 'INSERTIONSORT': {
-                    console.log('insertionsort');
                     let {result, wrongArray} = insertionSort(state.iteration, state.initialSeries, state.workingSeries);
 
                     return {

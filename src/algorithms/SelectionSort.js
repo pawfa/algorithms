@@ -29,45 +29,43 @@ export function selectionSort(iteration, initialData, data) {
 }
 
 
-export function selectionSortChart(data,sendGraphData) {
-    let array = data.map(a => Object.assign({}, a));
-
-    let callCount = 0;
-    let repeater = setInterval(function () {
-        if (callCount < array.length) {
-
-            let lowestIndex = callCount;
-
-            for (let j = callCount + 1; j < array.length; j++) {
-                sendGraphData({
-                    chartArray: array,
-                    current: j,
-                    minIndex: lowestIndex
-                });
-                if (Number(array[j].value) < Number(array[lowestIndex].value)) {
-                    lowestIndex = j;
+export function selectionSortChart(data,sendGraphData,i) {
+    if(i === data.length) return;
+    let callCount = i;
+    let lowestIndex = i;
+        let repeater = setInterval(function () {
+            if (callCount < data.length) {
+                if (Number(data[callCount].value) < Number(data[lowestIndex].value)) {
+                    lowestIndex = callCount;
+                    sendGraphData({
+                        chartArray: data,
+                        current: callCount,
+                        minIndex: lowestIndex,
+                        iteration: i
+                    });
                 }
+                sendGraphData({
+                    chartArray: data,
+                    current: callCount,
+                    minIndex: lowestIndex,
+                    iteration: i
+                });
+                callCount += 1;
+            } else {
+                let tmp = data[i];
+                data[i] = data[lowestIndex];
+                data[lowestIndex] = tmp;
+                sendGraphData({
+                    chartArray: data,
+                    current: i,
+                    minIndex: lowestIndex,
+                    iteration: i
+                });
+                i++;
+                setTimeout(function(){selectionSortChart(data,sendGraphData,i)}, 500);
+                clearInterval(repeater);
             }
-            if (lowestIndex !== callCount) {
-                let tmp = array[callCount];
-                array[callCount] = array[lowestIndex];
-                array[lowestIndex] = tmp;
-            }
-            // sendGraphData({
-            //     chartArray: array,
-            //     current: callCount,
-            //     minIndex: lowestIndex
-            // });
-            callCount += 1;
 
-        } else {
-            clearInterval(repeater);
-        }
+        }, 500);
 
-    }, 1000);
-
-
-
-    console.log(array);
-    return array;
 }

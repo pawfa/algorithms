@@ -1,0 +1,10 @@
+.sorted {
+    fill: green;
+}
+.min {
+    fill: red !important;
+}
+.current {
+    fill: yellow !important;
+}
+.axis { font: 14px sans-serif; }
