@@ -7,19 +7,24 @@ import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import GraphContainer from "./GraphContainer";
 import {selectionSortChart} from "../algorithms/SelectionSort";
 import {insertionSortChart} from "../algorithms/InsertionSort";
+import {mergeSortChart} from "../algorithms/MergeSort";
 
 class SeriesInputContainer extends Component {
 
     runSorting = () =>{
         const {chartArray} = this.props.chartData;
         let array = chartArray.map(a => Object.assign({}, a));
-
-        switch(this.props.algorithmType){
+        const {algorithmType} = this.props;
+        switch(algorithmType){
             case 'SELECTIONSORT':
                 selectionSortChart(array,this.props.sendGraphData,0);
                 break;
             case 'INSERTIONSORT':
                 insertionSortChart(array,this.props.sendGraphData,0);
+                break;
+            case 'MERGESORT':
+                mergeSortChart(array,this.props.sendGraphData,0);
+                break
         }
 
     };
@@ -88,7 +93,7 @@ class SeriesInputContainer extends Component {
     }
 
     render() {
-        const {workingSeries, iteration, end, chartData} = this.props;
+        const {workingSeries, iteration, end, chartData, algorithmType} = this.props;
 
         const blocks = [];
         let showMessage = "Iteration number: " + iteration;
@@ -108,7 +113,7 @@ class SeriesInputContainer extends Component {
         return (
             <div className={'container'}>
                 <div className="row">
-                    <GraphContainer chartData={chartData}/>
+                    <GraphContainer chartData={chartData} algorithmType ={algorithmType}/>
                     <button className={'buttonPresentation'} type='text' onClick={this.runSorting}>Sort</button>
                 </div>
 

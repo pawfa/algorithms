@@ -6,7 +6,6 @@ let arrayGlobal;
 let wrongArray = [];
 
 export function mergeSort(iteration, initialData, data) {
-    console.log(initialData);
     wrongArray = [];
     counter = 0;
     dataGlobal = data;
@@ -85,3 +84,46 @@ function endSorting(completed, userInput) {
     }
     return true;
 }
+
+export function mergeSortChart(data,sendGraphData){
+     mergeSortImp(data);
+
+    function mergeSortImp(arr) {
+        if (arr.length === 1) {
+            return arr
+        }
+
+        const middle = Math.floor(arr.length / 2);
+        const left = arr.slice(0, middle);
+        const right = arr.slice(middle);
+
+        return mergeChart(
+            mergeSortImp(left),
+            mergeSortImp(right),
+            arr
+        )
+    }
+
+    function mergeChart(left, right) {
+        counter++;
+        let result = [];
+        let indexLeft = 0;
+        let indexRight = 0;
+
+        while (indexLeft < left.length && indexRight < right.length) {
+            console.log(result.concat(left.slice(indexLeft)).concat(right.slice(indexRight)));
+            if (Number(left[indexLeft].value) < Number(right[indexRight].value)) {
+                result.push(left[indexLeft]);
+                indexLeft++
+            } else {
+                result.push(right[indexRight]);
+                indexRight++
+            }
+            console.log(result.concat(left.slice(indexLeft)).concat(right.slice(indexRight)));
+        }
+        // console.log(result);
+        // console.log(result.concat(left.slice(indexLeft)).concat(right.slice(indexRight)));
+        return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
+    }
+}
+

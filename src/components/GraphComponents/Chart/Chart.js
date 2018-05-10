@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import * as d3 from "d3";
 import 'd3-selection-multi';
 import './Chart.css'
+import fill from './Fill.js'
 
 class Chart extends Component {
 
@@ -118,12 +119,14 @@ class Chart extends Component {
     updateBarChart = () => {
 
 
-        const {chartArray, current, minIndex, iteration} = this.props.chartData;
+        const {chartData} = this.props;
+        const {chartArray} = chartData;
         const {xScale, yScale} = this.state.scales;
         const {colors, width, height, margin, vAxis} = this.state;
         const data = chartArray.map(e => Number(e.value));
         const dataMax = Math.max(...data);
         const svg = d3.select('svg');
+        const {algorithmType} = this.props;
         svg.attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom);
 
@@ -170,13 +173,8 @@ class Chart extends Component {
         bars.transition().duration(200)
             .styles({
                 'fill': function (data, i) {
-                    if (i === current && i !== minIndex) {
-                        return "#802CAB"
-                    }
-                    if (iteration >= 0 && iteration !== chartArray.length - 1 && i === minIndex) {
-                        return "#F51E6E"
-                    }
-                    return colors(data);
+                    return fill(chartData, data,i, algorithmType,colors);
+
                 },
                 'stroke': '#31708f',
                 'stroke-width': '1'

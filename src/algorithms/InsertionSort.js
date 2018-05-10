@@ -30,7 +30,11 @@ export function insertionSort(iteration, initialData, data) {
 }
 
 export function insertionSortChart(data, sendGraphData, i) {
-    if (i === data.length) return;
+    if (i === data.length)     {sendGraphData({
+        chartArray: data,
+        current: -1,
+        iteration: -1
+    }); return;}
     let callCount = i;
     let repeater = setInterval(function () {
         if (callCount > 0 && Number(data[callCount - 1].value) > Number(data[callCount].value)) {
@@ -50,9 +54,9 @@ function moveBar(data, sendGraphData,j,i) {
         let tmp = data[j];
         data[j] = data[j - 1];
         data[j - 1] = tmp;
-        sendGraphData({
-            chartArray: data,
-            current: j,
-            iteration: i
-        });
+    sendGraphData({
+        chartArray: data,
+        current: j-1,
+        iteration: i
+    });
 }
