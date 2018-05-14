@@ -49,3 +49,19 @@ h5{
 .buttonPresentation:hover:before {
     top: 0;
 }
+.item{
+    width: 60px;
+    height: 60px;
+    display: inline;
+    margin: 0 5px;
+    padding: 0;
+    border: 3px solid;
+}
+
+@media only screen and (max-width: 600px) {
+    .item {
+        width: 30px;
+        height: 30px;
+        font-size: 50px;
+    }
+}

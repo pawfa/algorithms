@@ -70,6 +70,7 @@ class SeriesInputContainer extends Component {
                 {(provided, snapshot) => (
                     <div
                         ref={provided.innerRef}
+                        className={'item'}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         style={getItemStyle(
@@ -94,7 +95,6 @@ class SeriesInputContainer extends Component {
 
     render() {
         const {workingSeries, iteration, end, chartData, algorithmType} = this.props;
-
         const blocks = [];
         let showMessage = "Iteration number: " + iteration;
         if (this.props.algorithmType === 'PARTITION') {
@@ -154,7 +154,7 @@ const getListStyle = isDraggingOver => ({
     border: '1px solid grey',
     borderRadius:'2px',
     margin: '0 auto',
-    justifyContent: 'center'
+    justifyContent: 'center',
 });
 
 const reorder = (list, startIndex, endIndex) => {
@@ -166,12 +166,6 @@ const reorder = (list, startIndex, endIndex) => {
 
 const getItemStyle = (isDragging, draggableStyle) => ({
     userSelect: 'none',
-    width: '60px',
-    height: '60px',
-    display: 'inline',
-    margin: '0 5px',
-    padding: 0,
-    border: '3px solid',
     ...draggableStyle,
 });
 

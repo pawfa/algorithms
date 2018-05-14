@@ -1,5 +1,5 @@
 export default function fill (chartData,data,i, algorithmType, colors){
-    const{chartArray, current, minIndex, iteration} = chartData;
+    const{chartArray, current, minIndex, iteration, mergeArray} = chartData;
     switch(algorithmType){
         case 'SELECTIONSORT':
             if (i === current && i !== minIndex) {
@@ -14,6 +14,11 @@ export default function fill (chartData,data,i, algorithmType, colors){
                 return "#802CAB"
             }
             if (i === current && iteration !== -1) {
+                return "#F51E6E"
+            }
+            return colors(data);
+        case 'MERGESORT':
+            if ( mergeArray.includes(i)) {
                 return "#F51E6E"
             }
             return colors(data);

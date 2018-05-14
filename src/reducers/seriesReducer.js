@@ -11,7 +11,8 @@ const initialState = {
         chartArray: [],
         current: 0,
         minIndex: 0,
-        iteration: -1
+        iteration: -1,
+        mergeArray:[]
     },
     iteration: 1,
     pivot: 1,

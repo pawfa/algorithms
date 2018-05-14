@@ -1,3 +1,5 @@
+import {selectionSortChart} from "./SelectionSort";
+
 let counter = 0;
 let iterationArray = [];
 let iter;
@@ -85,8 +87,18 @@ function endSorting(completed, userInput) {
     return true;
 }
 
-export function mergeSortChart(data,sendGraphData){
-     mergeSortImp(data);
+let globalarr = [];
+
+export function mergeSortChart(data, sendGraphData) {
+    let count = 0;
+    globalarr = data.map(a => Object.assign({}, a));
+    mergeSortImp(data);
+    setTimeout(function () {
+        sendGraphData({
+            chartArray: globalarr,
+            mergeArray: []
+        });
+    }, (count+1)*1000);
 
     function mergeSortImp(arr) {
         if (arr.length === 1) {
@@ -105,25 +117,47 @@ export function mergeSortChart(data,sendGraphData){
     }
 
     function mergeChart(left, right) {
-        counter++;
+        count++;
         let result = [];
         let indexLeft = 0;
         let indexRight = 0;
 
         while (indexLeft < left.length && indexRight < right.length) {
-            console.log(result.concat(left.slice(indexLeft)).concat(right.slice(indexRight)));
-            if (Number(left[indexLeft].value) < Number(right[indexRight].value)) {
-                result.push(left[indexLeft]);
-                indexLeft++
-            } else {
-                result.push(right[indexRight]);
-                indexRight++
-            }
-            console.log(result.concat(left.slice(indexLeft)).concat(right.slice(indexRight)));
+            (function () {
+
+                let indexArr = [];
+
+                let startArr = result.concat(left.slice(indexLeft)).concat(right.slice(indexRight)).map((e) => e.id);
+
+                data.forEach((e, i) => {
+                    if (startArr.includes(e.id)) indexArr.push(i);
+                });
+
+                if (Number(left[indexLeft].value) < Number(right[indexRight].value)) {
+                    result.push(left[indexLeft]);
+                    indexLeft++
+                } else {
+                    result.push(right[indexRight]);
+                    indexRight++
+                }
+
+                let endArr = result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
+                for (let i = 0; i < indexArr.length; i++) {
+                    globalarr[indexArr[i]] = endArr[i];
+                }
+                let arr = globalarr.map(a => Object.assign({}, a));
+                setTimeout(function () {
+                    sendGraphData({
+                        chartArray: arr,
+                        mergeArray: indexArr
+                    });
+                }, count * 1000);
+
+            }())
         }
-        // console.log(result);
-        // console.log(result.concat(left.slice(indexLeft)).concat(right.slice(indexRight)));
+
         return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
     }
 }
+
 
