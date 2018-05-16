@@ -1,205 +1,222 @@
-import React, {Component} from 'react'
-import {connect} from "react-redux";
-import SeriesBlock from '../components/SeriesBlock'
-import {checkCorrectness, changeBlocksOrder, setPivot, sendGraphData} from "../actions";
-import './SeriesPresentationContainer.css'
+/* eslint-disable no-unused-vars,require-jsdoc,no-invalid-this */
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import SeriesBlock from '../components/SeriesBlock';
+import {
+  checkCorrectness,
+  changeBlocksOrder,
+  setPivot,
+  sendGraphData,
+} from '../actions';
+import './SeriesPresentationContainer.css';
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
-import GraphContainer from "./GraphContainer";
-import {selectionSortChart} from "../algorithms/SelectionSort";
-import {insertionSortChart} from "../algorithms/InsertionSort";
-import {mergeSortChart} from "../algorithms/MergeSort";
+import GraphContainer from './GraphContainer';
+import {selectionSortChart} from '../algorithms/SelectionSort';
+import {insertionSortChart} from '../algorithms/InsertionSort';
+import {mergeSortChart} from '../algorithms/MergeSort';
 
 class SeriesInputContainer extends Component {
+  runSorting = () => {
+    const {chartArray} = this.props.chartData;
+    let array = chartArray.map((a) => Object.assign({}, a));
+    const {algorithmType} = this.props;
+    switch (algorithmType) {
+      case 'SELECTIONSORT':
+        selectionSortChart(array, this.props.sendGraphData, 0);
+        break;
+      case 'INSERTIONSORT':
+        insertionSortChart(array, this.props.sendGraphData, 0);
+        break;
+      case 'MERGESORT':
+        mergeSortChart(array, this.props.sendGraphData, 0);
+        break;
+      default:
+        break;
+    }
+  };
 
-    runSorting = () =>{
-        const {chartArray} = this.props.chartData;
-        let array = chartArray.map(a => Object.assign({}, a));
-        const {algorithmType} = this.props;
-        switch(algorithmType){
-            case 'SELECTIONSORT':
-                selectionSortChart(array,this.props.sendGraphData,0);
-                break;
-            case 'INSERTIONSORT':
-                insertionSortChart(array,this.props.sendGraphData,0);
-                break;
-            case 'MERGESORT':
-                mergeSortChart(array,this.props.sendGraphData,0);
-                break
-        }
+  onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
 
-    };
+    const items = reorder(
+        this.props.workingSeries,
+        result.source.index,
+        result.destination.index,
+    );
 
-    onDragEnd = (result) => {
-        // dropped outside the list
-        if (!result.destination) {
-            return;
-        }
+    this.props.changeBlocksOrder(items);
+  };
 
-        const items = reorder(
-            this.props.workingSeries,
-            result.source.index,
-            result.destination.index
-        );
+  choosePivot = (event) => {
+    this.props.setPivot(event);
+  };
 
-        this.props.changeBlocksOrder(items);
-    };
+  createBlock(i, numberObject) {
+    const {value, id} = numberObject;
+    const {wrongArray, pivot} = this.props;
+    let blockClass = '';
+    if (this.props.algorithmType === 'PARTITION' && pivot === id) {
+      blockClass = 'pivot';
+    }
+    if (wrongArray.includes(id)) {
+      blockClass = blockClass + 'wrong';
+    }
 
-    choosePivot = (event) => {
-        this.props.setPivot(event);
-    };
+    let clickable = undefined;
+    let pointer = null;
+    if (this.props.algorithmType === 'PARTITION') {
+      clickable = this.choosePivot;
+      pointer = {'cursor': 'pointer'};
+    }
+    return (
+        <Draggable key={id} draggableId={id} index={i}>
+          {(provided, snapshot) => (
+              <div
+                  ref={provided.innerRef}
+                  className={'item'}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  style={getItemStyle(
+                      snapshot.isDragging,
+                      provided.draggableProps.style,
+                  )
+                  }
+              >
+                <SeriesBlock
+                    click={clickable}
+                    key={id}
+                    pointer={pointer}
+                    index={i}
+                    id={id}
+                    number={value}
+                    resultClass={blockClass}/>
+              </div>
+          )}
+        </Draggable>
+    );
+  }
 
-    createBlock(i, numberObject) {
-        const {value, id} = numberObject;
-        const {wrongArray, pivot} = this.props;
-        let blockClass = '';
-        if (this.props.algorithmType === 'PARTITION' && pivot === id) {
-            blockClass = 'pivot';
-        }
-        if (wrongArray.includes(id)) {
-            blockClass = blockClass + 'wrong'
-        }
+  render() {
+    const {
+      workingSeries,
+      iteration,
+      end,
+      chartData,
+      algorithmType,
+    } = this.props;
+    const blocks = [];
+    let showMessage = 'Iteration number: ' + iteration;
+    if (this.props.algorithmType === 'PARTITION') {
+      if (end) {
+        showMessage = 'Series partitioned';
+      } else {
+        showMessage = 'Choose pivot';
+      }
+    } else if (end) {
+      showMessage = 'Series is sorted';
+    }
+    for (let i = 0; i < workingSeries.length; i++) {
+      blocks.push(this.createBlock(i, workingSeries[i]));
+    }
 
-        let clickable = undefined;
-        let pointer = null;
-        if (this.props.algorithmType === 'PARTITION') {
-            clickable = this.choosePivot;
-            pointer = {'cursor': 'pointer'}
-        }
-        return (
-            <Draggable key={id} draggableId={id} index={i}>
+    return (
+        <div className={'container'}>
+          <div className="row">
+            <GraphContainer chartData={chartData}
+                            algorithmType={algorithmType}/>
+            <button className={'buttonPresentation'} type='text'
+                    onClick={this.runSorting}>Sort
+            </button>
+          </div>
+
+          <div className="row">
+            <div className={'iterationNumber'}><h5>{showMessage}</h5></div>
+          </div>
+          <div className="row">
+            <DragDropContext onDragEnd={this.onDragEnd}>
+              <Droppable droppableId="droppable" direction="horizontal"
+                         className={'blockContainer'}>
                 {(provided, snapshot) => (
                     <div
                         ref={provided.innerRef}
-                        className={'item'}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        style={getItemStyle(
-                            snapshot.isDragging,
-                            provided.draggableProps.style
-                        )
-                        }
+                        style={getListStyle(snapshot.isDraggingOver)}
+                        {...provided.droppableProps}
                     >
-                        <SeriesBlock
-                            click={clickable}
-                            key={id}
-                            pointer={pointer}
-                            index={i}
-                            id={id}
-                            number={value}
-                            resultClass={blockClass}/>
+                      {blocks}
                     </div>
                 )}
-            </Draggable>
-        )
-    }
-
-    render() {
-        const {workingSeries, iteration, end, chartData, algorithmType} = this.props;
-        const blocks = [];
-        let showMessage = "Iteration number: " + iteration;
-        if (this.props.algorithmType === 'PARTITION') {
-            if (end) {
-                showMessage = 'Series partitioned';
-            } else {
-                showMessage = "Choose pivot";
-            }
-        } else if (end) {
-            showMessage = "Series is sorted";
-        }
-        for (let i = 0; i < workingSeries.length; i++) {
-            blocks.push(this.createBlock(i, workingSeries[i]));
-        }
-
-        return (
-            <div className={'container'}>
-                <div className="row">
-                    <GraphContainer chartData={chartData} algorithmType ={algorithmType}/>
-                    <button className={'buttonPresentation'} type='text' onClick={this.runSorting}>Sort</button>
-                </div>
-
-                <div className="row">
-                    <div className={'iterationNumber'}><h5>{showMessage}</h5></div>
-                </div>
-            <div className="row">
-            <DragDropContext onDragEnd={this.onDragEnd}>
-                <Droppable droppableId="droppable" direction="horizontal" className={'blockContainer'}>
-                    {(provided, snapshot) => (
-                        <div
-                            ref={provided.innerRef}
-                            style={getListStyle(snapshot.isDraggingOver)}
-                            {...provided.droppableProps}
-                        >
-                            {blocks}
-                        </div>
-                    )}
-                </Droppable>
+              </Droppable>
             </DragDropContext>
-            </div>
-                <div className="row">
-                <button className={'buttonPresentation'} type='text' disabled={end} onClick={()=>this.props.checkCorrectness()}>Check</button>
-                </div>
-            </div>
-        );
-    }
-
+          </div>
+          <div className="row">
+            <button className={'buttonPresentation'} type='text' disabled={end}
+                    onClick={() => this.props.checkCorrectness()}>Check
+            </button>
+          </div>
+        </div>
+    );
+  }
 }
 
 const grid = 8;
 
-const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? '#C3B6E3' : '#A79BC2',
-    display: 'inline-flex',
-    padding: grid,
-    overflow: 'auto',
-    border: '1px solid grey',
-    borderRadius:'2px',
-    margin: '0 auto',
-    justifyContent: 'center',
+const getListStyle = (isDraggingOver) => ({
+  background: isDraggingOver ? '#C3B6E3' : '#A79BC2',
+  display: 'inline-flex',
+  padding: grid,
+  overflow: 'auto',
+  border: '1px solid grey',
+  borderRadius: '2px',
+  margin: '0 auto',
+  justifyContent: 'center',
 });
 
 const reorder = (list, startIndex, endIndex) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result;
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
 };
 
 const getItemStyle = (isDragging, draggableStyle) => ({
-    userSelect: 'none',
-    ...draggableStyle,
+  userSelect: 'none',
+  ...draggableStyle,
 });
 
 const mapStateToProps = (state) => {
-    return {
-        initialSeries: state.seriesReducer.initialSeries,
-        workingSeries: state.seriesReducer.workingSeries,
-        wrongArray: state.seriesReducer.wrongArray,
-        chartData: state.seriesReducer.chartData,
-        iteration: state.seriesReducer.iteration,
-        pivot: state.seriesReducer.pivot,
-        current: state.seriesReducer.current,
-        algorithmType: state.seriesReducer.algorithmType,
-        correct: state.seriesReducer.correct,
-        end: state.seriesReducer.end
-    }
+  return {
+    initialSeries: state.seriesReducer.initialSeries,
+    workingSeries: state.seriesReducer.workingSeries,
+    wrongArray: state.seriesReducer.wrongArray,
+    chartData: state.seriesReducer.chartData,
+    iteration: state.seriesReducer.iteration,
+    pivot: state.seriesReducer.pivot,
+    current: state.seriesReducer.current,
+    algorithmType: state.seriesReducer.algorithmType,
+    correct: state.seriesReducer.correct,
+    end: state.seriesReducer.end,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        changeBlocksOrder: (dragIndex, hoverIndex, dragNumber) => {
-            dispatch(changeBlocksOrder(dragIndex, hoverIndex, dragNumber))
-        },
-        checkCorrectness: () => {
-            dispatch(checkCorrectness())
-        },
-        setPivot: (pivotId) => {
-            dispatch(setPivot(pivotId))
-        },
-        sendGraphData: (data) => {
-            dispatch(sendGraphData(data))
-        }
-    }
+  return {
+    changeBlocksOrder: (dragIndex, hoverIndex, dragNumber) => {
+      dispatch(changeBlocksOrder(dragIndex, hoverIndex, dragNumber));
+    },
+    checkCorrectness: () => {
+      dispatch(checkCorrectness());
+    },
+    setPivot: (pivotId) => {
+      dispatch(setPivot(pivotId));
+    },
+    sendGraphData: (data) => {
+      dispatch(sendGraphData(data));
+    },
+  };
 };
-SeriesInputContainer = connect(mapStateToProps, mapDispatchToProps)(SeriesInputContainer);
+SeriesInputContainer = connect(mapStateToProps, mapDispatchToProps)(
+    SeriesInputContainer);
 export default SeriesInputContainer;
 

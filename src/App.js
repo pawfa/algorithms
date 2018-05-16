@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+/* eslint-disable no-unused-vars,require-jsdoc */
+import React, {Component} from 'react';
 import './App.css';
-import SeriesInputContainer from './containers/SeriesInputContainer'
-import SeriesPresentationContainer from './containers/SeriesPresentationContainer'
-import GraphContainer from './containers/GraphContainer'
+import SeriesInputContainer from './containers/SeriesInputContainer';
+import SeriesPresentationContainer from './containers/SeriesPresentationContainer';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+        <div className="App">
           <SeriesInputContainer/>
           <SeriesPresentationContainer/>
-      </div>
+        </div>
     );
   }
 }

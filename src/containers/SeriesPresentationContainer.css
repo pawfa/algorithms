@@ -1,14 +1,17 @@
-.blockContainer{
+.blockContainer {
     margin: 0 auto;
     justify-content: center;
 }
-.presentationContainer{
+
+.presentationContainer {
     margin: 0 auto;
 }
-h5{
+
+h5 {
     font-family: 'Changa', sans-serif;
 }
-.buttonPresentation{
+
+.buttonPresentation {
     position: relative;
     font-family: 'Changa', sans-serif;
     font-size: 25px;
@@ -19,22 +22,25 @@ h5{
     cursor: pointer;
     outline: 0;
     color: black;
-    overflow:hidden;
+    overflow: hidden;
     z-index: 1;
     background-color: #F1ECE9;
-    transition:         0.08s ease-in;
-    -o-transition:      0.08s ease-in;
-    -ms-transition:     0.08s ease-in;
-    -moz-transition:    0.08s ease-in;
+    transition: 0.08s ease-in;
+    -o-transition: 0.08s ease-in;
+    -ms-transition: 0.08s ease-in;
+    -moz-transition: 0.08s ease-in;
     -webkit-transition: 0.08s ease-in;
 }
-.buttonPresentation:focus{
+
+.buttonPresentation:focus {
     background-color: #F1ECE9;
     color: #5C566B;
 }
+
 .buttonPresentation:hover {
     color: white;
 }
+
 .buttonPresentation:before {
     content: "";
     position: absolute;
@@ -46,10 +52,12 @@ h5{
     z-index: -1;
     -webkit-transition: top 0.2s ease-in;
 }
+
 .buttonPresentation:hover:before {
     top: 0;
 }
-.item{
+
+.item {
     width: 60px;
     height: 60px;
     display: inline;

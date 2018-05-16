@@ -1,15 +1,14 @@
-import React, {Component} from 'react'
-import Chart from "../components/GraphComponents/Chart/Chart";
+/* eslint-disable no-unused-vars,require-jsdoc */
+import React, {Component} from 'react';
+import Chart from '../components/GraphComponents/Chart/Chart';
 
 class GraphContainer extends Component {
-
-
-    render(){
-        const{chartData,algorithmType} = this.props;
-        return <div className="App-chart-container">
-            <Chart chartData={chartData} algorithmType={algorithmType}/>
-        </div>
-    }
+  render() {
+    const {chartData, algorithmType} = this.props;
+    return <div className="App-chart-container">
+      <Chart chartData={chartData} algorithmType={algorithmType}/>
+    </div>;
+  }
 }
 
 export default GraphContainer;
