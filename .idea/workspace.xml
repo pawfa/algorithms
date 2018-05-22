@@ -4,15 +4,7 @@
     <list default="true" id="e1ce5015-7216-4ae3-bd6f-b56d5f0b42ed" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/actions/index.js" afterPath="$PROJECT_DIR$/src/actions/index.js" />
       <change beforePath="$PROJECT_DIR$/src/algorithms/Partition.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/components/GraphComponents/Chart/Chart.js" afterPath="$PROJECT_DIR$/src/components/GraphComponents/Chart/Chart.js" />
-      <change beforePath="$PROJECT_DIR$/src/components/SeriesBlock.css" afterPath="$PROJECT_DIR$/src/components/SeriesBlock.css" />
-      <change beforePath="$PROJECT_DIR$/src/containers/GraphContainer.js" afterPath="$PROJECT_DIR$/src/containers/GraphContainer.js" />
-      <change beforePath="$PROJECT_DIR$/src/containers/SeriesInputContainer.css" afterPath="$PROJECT_DIR$/src/containers/SeriesInputContainer.css" />
-      <change beforePath="$PROJECT_DIR$/src/containers/SeriesInputContainer.js" afterPath="$PROJECT_DIR$/src/containers/SeriesInputContainer.js" />
-      <change beforePath="$PROJECT_DIR$/src/containers/SeriesPresentationContainer.js" afterPath="$PROJECT_DIR$/src/containers/SeriesPresentationContainer.js" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/seriesReducer.js" afterPath="$PROJECT_DIR$/src/reducers/seriesReducer.js" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -70,11 +62,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
-              <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="27" />
+              <caret line="17" column="12" lean-forward="true" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -104,7 +96,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SeriesInputContainer.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SeriesInputContainer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/containers/SeriesInputContainer.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="374">
@@ -199,12 +191,12 @@
         <option value="$PROJECT_DIR$/src/algorithms/Partition.js" />
         <option value="$PROJECT_DIR$/src/components/GraphComponents/Chart/Chart.js" />
         <option value="$PROJECT_DIR$/src/components/GraphComponents/Chart/Fill.js" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/containers/GraphContainer.js" />
         <option value="$PROJECT_DIR$/src/reducers/seriesReducer.js" />
         <option value="$PROJECT_DIR$/src/containers/SeriesPresentationContainer.js" />
         <option value="$PROJECT_DIR$/src/containers/SeriesInputContainer.css" />
         <option value="$PROJECT_DIR$/src/containers/SeriesInputContainer.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -504,7 +496,7 @@
       <workItem from="1526448840421" duration="28111000" />
       <workItem from="1526897649421" duration="6334000" />
       <workItem from="1526923042508" duration="601000" />
-      <workItem from="1526977086775" duration="3579000" />
+      <workItem from="1526977086775" duration="3695000" />
     </task>
     <task id="LOCAL-00001" summary="Created first algorithm exercise.">
       <created>1523985966786</created>
@@ -632,11 +624,18 @@
       <option name="project" value="LOCAL" />
       <updated>1526452258311</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Code cleaning.">
+      <created>1526980942140</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1526980942140</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="321986000" />
+    <option name="totallyTimeSpent" value="322102000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2514" height="1096" extended-state="6" />
@@ -967,14 +966,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/GraphComponents/Chart/Chart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="223">
@@ -998,6 +989,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="26" column="54" lean-forward="true" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="12" lean-forward="true" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
           <folding />
         </state>
       </provider>
