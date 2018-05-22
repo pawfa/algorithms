@@ -75,9 +75,9 @@ input[type=text] {
 
 
 
-.input-field input[type=text]:focus + label {
-    color: red !important;;
-}
+/*.input-field input[type=text]:focus + label {*/
+    /*color: red !important;;*/
+/*}*/
 /* label underline focus color */
 .input-field input[type=text]:focus {
     border-bottom: 1px solid #C3B6E3 !important;

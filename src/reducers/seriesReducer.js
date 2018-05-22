@@ -1,7 +1,6 @@
 import {selectionSort} from '../algorithms/SelectionSort.js';
 import {insertionSort} from '../algorithms/InsertionSort';
 import {mergeSort} from '../algorithms/MergeSort';
-import {partition} from '../algorithms/Partition';
 
 const initialState = {
   initialSeries: [],
@@ -15,7 +14,6 @@ const initialState = {
     mergeArray: [],
   },
   iteration: 1,
-  pivot: 1,
   current: 0,
   algorithmType: 'SELECTIONSORT',
   correct: '',
@@ -61,12 +59,6 @@ const seriesReducer = (state = initialState, action) => {
         },
         algorithmType: action.payload,
       };
-    case 'SET_PIVOT':
-      return {
-        ...initialState,
-        algorithmType: state.algorithmType,
-        pivot: action.payload,
-      };
     case 'CHANGE_BLOCKS_ORDER':
       const [result] = action.payload;
       return {...state, workingSeries: result};
@@ -102,18 +94,6 @@ const seriesReducer = (state = initialState, action) => {
         case 'MERGESORT': {
           let {result, wrongArray, end} = mergeSort(state.iteration,
               state.initialSeries, state.workingSeries);
-
-          return {
-            ...state,
-            iteration: (result ? state.iteration + 1 : state.iteration),
-            correct: result,
-            wrongArray: wrongArray,
-            end: end,
-          };
-        }
-        case 'PARTITION': {
-          let {result, wrongArray, end} = partition(state.iteration,
-              state.initialSeries, state.workingSeries, state.pivot);
 
           return {
             ...state,

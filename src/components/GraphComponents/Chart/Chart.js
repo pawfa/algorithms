@@ -87,11 +87,11 @@ class Chart extends Component {
           if (Math.floor(e) !== e) {
             return;
           }
-
           return e;
         });
 
     const verticalGuide = d3.select('svg').append('g');
+
     vAxis(verticalGuide);
     verticalGuide.attr('transform', 'translate(' + margin.left + ', ' +
         margin.top + ')');
@@ -115,7 +115,6 @@ class Chart extends Component {
 
   updateBarChart = () => {
     const {chartData} = this.props;
-    console.log(chartData);
     const {chartArray} = chartData;
     const {xScale, yScale} = this.state.scales;
     const {colors, width, height, margin, vAxis} = this.state;
@@ -123,6 +122,7 @@ class Chart extends Component {
     const dataMax = Math.max(...data);
     const svg = d3.select('svg');
     const {algorithmType} = this.props;
+
     svg.attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom);
 
@@ -143,21 +143,21 @@ class Chart extends Component {
 
     bars.enter()
         .append('rect')
-        .attr('class', 'bar')
         .attr('y', yScale(0))
         .attr('height', 0)
-        .attr('x', (data.length - 1) * xScale.bandwidth(),
+        .attr('x', xScale.bandwidth(),
         );
 
-    bars.transition().styles({
-      'fill': function(data) {
+    bars.merge(bars).transition().styles({
+      'fill': function(data, i) {
+
         return colors(data);
       },
       'stroke': '#31708f',
       'stroke-width': '1',
     });
 
-    bars.merge(bars).transition().styles({
+    bars.transition().styles({
       'fill': function(data) {
         return colors(data);
       },
@@ -187,6 +187,9 @@ class Chart extends Component {
         .attr('height', function(d) {
           return height - yScale(d);
         });
+    if (!bars._groups[0][data.length - 1]) {
+      this.updateBarChart();
+    }
   };
 
   render() {

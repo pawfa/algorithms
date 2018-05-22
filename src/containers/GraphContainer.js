@@ -6,7 +6,7 @@ class GraphContainer extends Component {
   render() {
     const {chartData, algorithmType} = this.props;
     return <div className="App-chart-container">
-      <Chart chartData={chartData} algorithmType={algorithmType}/>
+      <Chart chartData={chartData} algorithmType={algorithmType} />
     </div>;
   }
 }

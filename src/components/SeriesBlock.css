@@ -14,17 +14,6 @@
 .correct{
     background-color: green;
 }
-.pivot{
-    background-color: #31C8ED;
-}
-.pivotwrong{
-    background: -moz-linear-gradient(135deg, #FF3F27 50%, #31C8ED 50%); /* ff3.6+ */
-    background: -webkit-gradient(linear, left top, right bottom, color-stop(50%, #31C8ED), color-stop(50%, #FF3F27)); /* safari4+,chrome */
-    background: -webkit-linear-gradient(135deg, #FF3F27 50%, #31C8ED 50%); /* safari5.1+,chrome10+ */
-    background: -o-linear-gradient(135deg, #FF3F27 50%, #31C8ED 50%); /* opera 11.10+ */
-    background: -ms-linear-gradient(135deg, #FF3F27 50%, #31C8ED 50%); /* ie10+ */
-    background: linear-gradient(315deg, #FF3F27 50%, #31C8ED 50%); /* w3c */
-}
 
 @media only screen and (max-width: 600px) {
     .block {

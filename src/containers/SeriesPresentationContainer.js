@@ -5,7 +5,6 @@ import SeriesBlock from '../components/SeriesBlock';
 import {
   checkCorrectness,
   changeBlocksOrder,
-  setPivot,
   sendGraphData,
 } from '../actions';
 import './SeriesPresentationContainer.css';
@@ -15,7 +14,21 @@ import {selectionSortChart} from '../algorithms/SelectionSort';
 import {insertionSortChart} from '../algorithms/InsertionSort';
 import {mergeSortChart} from '../algorithms/MergeSort';
 
-class SeriesInputContainer extends Component {
+class SeriesPresentationContainer extends Component {
+  onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const items = reorder(
+        this.props.workingSeries,
+        result.source.index,
+        result.destination.index,
+    );
+
+    this.props.changeBlocksOrder(items);
+  };
+
   runSorting = () => {
     const {chartArray} = this.props.chartData;
     let array = chartArray.map((a) => Object.assign({}, a));
@@ -35,41 +48,14 @@ class SeriesInputContainer extends Component {
     }
   };
 
-  onDragEnd = (result) => {
-    if (!result.destination) {
-      return;
-    }
-
-    const items = reorder(
-        this.props.workingSeries,
-        result.source.index,
-        result.destination.index,
-    );
-
-    this.props.changeBlocksOrder(items);
-  };
-
-  choosePivot = (event) => {
-    this.props.setPivot(event);
-  };
-
   createBlock(i, numberObject) {
     const {value, id} = numberObject;
-    const {wrongArray, pivot} = this.props;
+    const {wrongArray} = this.props;
     let blockClass = '';
-    if (this.props.algorithmType === 'PARTITION' && pivot === id) {
-      blockClass = 'pivot';
-    }
     if (wrongArray.includes(id)) {
       blockClass = blockClass + 'wrong';
     }
 
-    let clickable = undefined;
-    let pointer = null;
-    if (this.props.algorithmType === 'PARTITION') {
-      clickable = this.choosePivot;
-      pointer = {'cursor': 'pointer'};
-    }
     return (
         <Draggable key={id} draggableId={id} index={i}>
           {(provided, snapshot) => (
@@ -85,9 +71,7 @@ class SeriesInputContainer extends Component {
                   }
               >
                 <SeriesBlock
-                    click={clickable}
                     key={id}
-                    pointer={pointer}
                     index={i}
                     id={id}
                     number={value}
@@ -108,13 +92,7 @@ class SeriesInputContainer extends Component {
     } = this.props;
     const blocks = [];
     let showMessage = 'Iteration number: ' + iteration;
-    if (this.props.algorithmType === 'PARTITION') {
-      if (end) {
-        showMessage = 'Series partitioned';
-      } else {
-        showMessage = 'Choose pivot';
-      }
-    } else if (end) {
+    if (end) {
       showMessage = 'Series is sorted';
     }
     for (let i = 0; i < workingSeries.length; i++) {
@@ -125,7 +103,8 @@ class SeriesInputContainer extends Component {
         <div className={'container'}>
           <div className="row">
             <GraphContainer chartData={chartData}
-                            algorithmType={algorithmType}/>
+                            algorithmType={algorithmType}
+            />
             <button className={'buttonPresentation'} type='text'
                     onClick={this.runSorting}>Sort
             </button>
@@ -192,7 +171,6 @@ const mapStateToProps = (state) => {
     wrongArray: state.seriesReducer.wrongArray,
     chartData: state.seriesReducer.chartData,
     iteration: state.seriesReducer.iteration,
-    pivot: state.seriesReducer.pivot,
     current: state.seriesReducer.current,
     algorithmType: state.seriesReducer.algorithmType,
     correct: state.seriesReducer.correct,
@@ -208,15 +186,12 @@ const mapDispatchToProps = (dispatch) => {
     checkCorrectness: () => {
       dispatch(checkCorrectness());
     },
-    setPivot: (pivotId) => {
-      dispatch(setPivot(pivotId));
-    },
     sendGraphData: (data) => {
       dispatch(sendGraphData(data));
     },
   };
 };
-SeriesInputContainer = connect(mapStateToProps, mapDispatchToProps)(
-    SeriesInputContainer);
-export default SeriesInputContainer;
+SeriesPresentationContainer = connect(mapStateToProps, mapDispatchToProps)(
+    SeriesPresentationContainer);
+export default SeriesPresentationContainer;
 

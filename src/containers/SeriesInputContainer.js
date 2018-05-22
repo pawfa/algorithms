@@ -6,16 +6,35 @@ import './SeriesInputContainer.css';
 import {Modal, Button, Row} from 'react-materialize';
 
 class SeriesInputContainer extends Component {
+  constructor() {
+    super();
+    this.state = {
+      inputError: false,
+    };
+  }
+
   changeStringToArray = (event) => {
-    let seriesArray = event.target.value.split(',');
-    let seriesObjectsArray = [];
-    for (let i = 0; i < seriesArray.length; i++) {
-      seriesObjectsArray.push({
-        id: i,
-        value: seriesArray[i],
+    const re = new RegExp('^[0-9,.]*$');
+    let res = re.test(event.target.value);
+    if (!res) {
+      this.setState({
+        inputError: true,
       });
+    } else {
+      this.setState({
+        inputError: false,
+      });
+      let seriesArray = event.target.value.split(',');
+      let seriesObjectsArray = [];
+      for (let i = 0; i < seriesArray.length; i++) {
+        seriesObjectsArray.push({
+          id: i,
+          value: seriesArray[i],
+        });
+      }
+      this.props.changeAllSeries(seriesObjectsArray);
     }
-    this.props.changeAllSeries(seriesObjectsArray);
+
   };
 
   chooseSortingAlgorithm = (event) => {
@@ -28,8 +47,7 @@ class SeriesInputContainer extends Component {
     const buttonNames = [
       'SELECTIONSORT',
       'INSERTIONSORT',
-      'MERGESORT',
-      'PARTITION'];
+      'MERGESORT'];
 
     const buttons = buttonNames.map((e, i) => {
       let active = e === algorithmType ? ' active' : '';
@@ -66,8 +84,7 @@ class SeriesInputContainer extends Component {
             type by clicking on one of the buttons below. After choosing
             algorithm you need to
             set series of numbers in correct order depending of consecutive
-            iterations.
-            In partition algorithm you also have to pick a pivot.</p>
+            iterations.</p>
         </Modal>
       </Row>
       <div>{buttons}</div>
