@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/src/algorithms/exc" />
       <excludeFolder url="file://$MODULE_DIR$/src/components/GraphComponents/Axes" />
       <excludeFolder url="file://$MODULE_DIR$/src/components/GraphComponents/Axis" />
       <excludeFolder url="file://$MODULE_DIR$/src/components/GraphComponents/Bars" />
