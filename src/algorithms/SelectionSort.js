@@ -1,10 +1,3 @@
-/**
- *
- * @param iteration
- * @param initialData
- * @param data
- * @returns {{result: boolean, wrongArray: Array, chartArray}}
- */
 export function selectionSort(iteration, initialData, data) {
   let array = initialData.map((a) => Object.assign({}, a));
   let wrongArray = [];
@@ -35,12 +28,6 @@ export function selectionSort(iteration, initialData, data) {
   };
 }
 
-/**
- *
- * @param data
- * @param sendGraphData
- * @param i
- */
 export function selectionSortChart(data, sendGraphData, i) {
   if (i === data.length) return;
   let callCount = i;

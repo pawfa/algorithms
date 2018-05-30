@@ -1,12 +1,3 @@
-/**
- *
- * @param chartData
- * @param data
- * @param i
- * @param algorithmType
- * @param colors
- * @returns {*}
- */
 export default function fill(chartData, data, i, algorithmType, colors) {
   const {chartArray, current, minIndex, iteration, mergeArray} = chartData;
   switch (algorithmType) {

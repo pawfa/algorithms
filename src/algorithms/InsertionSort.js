@@ -1,10 +1,3 @@
-/**
- *
- * @param iteration
- * @param initialData
- * @param data
- * @returns {{result: boolean, wrongArray: Array}}
- */
 export function insertionSort(iteration, initialData, data) {
   let array = initialData.map((a) => Object.assign({}, a));
   let wrongArray = [];
@@ -33,12 +26,6 @@ export function insertionSort(iteration, initialData, data) {
   };
 }
 
-/**
- *
- * @param data
- * @param sendGraphData
- * @param i
- */
 export function insertionSortChart(data, sendGraphData, i) {
   if (i === data.length) {
     sendGraphData({
@@ -62,13 +49,6 @@ export function insertionSortChart(data, sendGraphData, i) {
   }, 500);
 }
 
-/**
- *
- * @param data
- * @param sendGraphData
- * @param j
- * @param i
- */
 function moveBar(data, sendGraphData, j, i) {
   let tmp = data[j];
   data[j] = data[j - 1];

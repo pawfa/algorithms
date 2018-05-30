@@ -5,13 +5,6 @@ let dataGlobal;
 let arrayGlobal;
 let wrongArray = [];
 
-/**
- *
- * @param iteration
- * @param initialData
- * @param data
- * @returns {{result: boolean, wrongArray: Array, end: boolean}}
- */
 export function mergeSort(iteration, initialData, data) {
   wrongArray = [];
   counter = 0;
@@ -29,11 +22,6 @@ export function mergeSort(iteration, initialData, data) {
   };
 }
 
-/**
- *
- * @param arr
- * @return {*}
- */
 function mergeSortImp(arr) {
   if (arr.length === 1) {
     return arr;
@@ -50,13 +38,7 @@ function mergeSortImp(arr) {
   );
 }
 
-/**
- *
- * @param left
- * @param right
- * @param arr
- * @returns {*[]}
- */
+
 function merge(left, right, arr) {
   counter++;
   let result = [];
@@ -95,12 +77,6 @@ function merge(left, right, arr) {
   return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
 }
 
-/**
- *
- * @param completed
- * @param userInput
- * @returns {boolean}
- */
 function endSorting(completed, userInput) {
   for (let i = 0; i < completed.length; i++) {
     if (completed[i].id !== userInput[i].id) {
@@ -112,11 +88,6 @@ function endSorting(completed, userInput) {
 
 let globalarr = [];
 
-/**
- *
- * @param data
- * @param sendGraphData
- */
 export function mergeSortChart(data, sendGraphData) {
   let count = 0;
   globalarr = data.map((a) => Object.assign({}, a));
