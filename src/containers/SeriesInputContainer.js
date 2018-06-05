@@ -16,25 +16,22 @@ class SeriesInputContainer extends Component {
   changeStringToArray = (event) => {
     const re = new RegExp('^[0-9,.]*$');
     let res = re.test(event.target.value);
-    if (!res) {
-      this.setState({
-        inputError: true,
-      });
-    } else {
+    if (res) {
       this.setState({
         inputError: false,
       });
       let seriesArray = event.target.value.split(',');
-      let seriesObjectsArray = [];
-      for (let i = 0; i < seriesArray.length; i++) {
-        seriesObjectsArray.push({
+      this.props.changeAllSeries(seriesArray.map((e, i) => {
+        return {
           id: i,
           value: seriesArray[i],
-        });
-      }
-      this.props.changeAllSeries(seriesObjectsArray);
+        };
+      }));
+    } else {
+      this.setState({
+        inputError: true,
+      });
     }
-
   };
 
   chooseSortingAlgorithm = (event) => {
@@ -47,16 +44,15 @@ class SeriesInputContainer extends Component {
     const buttonNames = [
       'SELECTIONSORT',
       'INSERTIONSORT',
-      'MERGESORT'];
+      'MERGESORT',
+    ];
 
     const buttons = buttonNames.map((e, i) => {
       let active = e === algorithmType ? ' active' : '';
       return <button className={'button' + active} value={e}
                      onClick={this.chooseSortingAlgorithm} key={i}>{e}</button>;
     });
-    for (let i = 0; i < initialSeries.length; i++) {
-      inputSeries.push(initialSeries[i].value);
-    }
+    initialSeries.forEach( e => inputSeries.push(e.value));
 
     return <div className={'container inputContainer'}>
       <Row className="mainRow">

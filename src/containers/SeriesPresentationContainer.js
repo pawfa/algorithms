@@ -90,14 +90,12 @@ class SeriesPresentationContainer extends Component {
       chartData,
       algorithmType,
     } = this.props;
-    const blocks = [];
-    let showMessage = 'Iteration number: ' + iteration;
-    if (end) {
-      showMessage = 'Series is sorted';
-    }
-    for (let i = 0; i < workingSeries.length; i++) {
-      blocks.push(this.createBlock(i, workingSeries[i]));
-    }
+    let blocks = [];
+    let showMessage = end
+        ? 'Series is sorted'
+        : 'Iteration number: ' + iteration;
+
+    blocks = workingSeries.map((e, i) => this.createBlock(i, e))
 
     return (
         <div className={'container'}>
